@@ -16,7 +16,6 @@ app.post('/insert', (req, res) => {
     const db = dbService.getDbServiceInstance();
 
     const result = db.insertNewName(nutzername);
-
     result
         .then(data => res.json({success: true}))
         .catch(err => console.log(err));
@@ -31,6 +30,7 @@ app.get('/getAll', (req, res) => {
     result
         .then(data => res.json({data : data}))
         .catch(err => console.log(err));
+    console.log('daten sind bereit')
 });
 
 //update

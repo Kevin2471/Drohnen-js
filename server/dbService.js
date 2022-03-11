@@ -24,15 +24,16 @@ class DbService {
 
     async getAllData() {
         try {
-            return await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Nutzerdaten;";
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM nutzerdaten;";
 
                 connection.query(query, (err, res) => {
                     if (err) reject(new Error(err.message));
                     resolve(res);
                 })
             });
-
+            console.log('daten sind geladen');
+            return response;
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +43,7 @@ class DbService {
         try {
             const passwort = "Hier steht ein Passwort";
             const insertId = await new Promise((resolve, reject) => {
-                const query = "INSERT INTO Nutzerdaten (Benutzername, Passwort) VALUES (?,?);";
+                const query = "INSERT INTO nutzerdaten (Benutzername, Passwort) VALUES (?,?);";
 
                 connection.query(query, [nutzername, passwort], (err, res) => {
                     if (err) reject(new Error(err.message));
