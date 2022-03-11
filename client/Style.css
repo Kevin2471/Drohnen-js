@@ -1,0 +1,110 @@
+.Überschrift {
+    background-color: deepskyblue;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+.header {
+    position: fixed;
+    width: 98.5%;
+    height: 150px;
+    top: 0px;
+    background-color: white;
+}
+
+.center {
+    text-align: center;
+}
+
+.left {
+    text-align: left;
+}
+
+.red {
+    color: red;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 15%;
+    position: fixed;
+    height: 100%;
+    margin-top: 140px;
+    overflow: auto;
+    background-color: #D0D0D0;
+}
+
+.formular {
+    margin-right: 35%;
+    margin-left: 35%;
+    text-align: right;
+}
+
+li a {
+    display: block;
+    color: black;
+    padding: 10px 0 10px 10px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #777;
+    color: white;
+}
+
+li a.aktiv {
+    text-decoration: underline;
+}
+
+.textarea {
+    border: 1px solid #000;
+    width: 100%;
+    background-color: white;
+}
+
+.Textfeld {
+    margin-left: 15%;
+    padding-left: 1%;
+    width: 83%;
+    padding-top: 142px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.themen {
+    border: 1px solid black;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+}
+
+.black {
+    color: black;
+    text-decoration: none;
+}
+
+.unterstrichen:hover {
+    border-bottom: black solid 1px;
+}
+
+.abstandlinksrechts {
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+.textrechts {
+    text-align: right;
+}
+
+.linieunten {
+    border-bottom: black solid 1px;
+}
+
+.kommentar {
+    margin-left: 3%;
+}

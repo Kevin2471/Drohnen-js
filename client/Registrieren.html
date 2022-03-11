@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrieren</title>
+    <link rel="stylesheet" type="text/css" href="Style.css">
+</head>
+<body>
+
+<h1 class="Überschrift center">Willkommen auf dem Drohnenforum!</h1>
+
+<div class="formular">
+    <form action="Registrieren.html" method="post" id="form">
+        Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
+        Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
+        Passwort wiederholen: <input type="password" name="passwort2" id="passwort2"> <br> <br>
+        <div class="wrapper">
+            <a href="Registrieren.html">zurück</a> <!-- auf anmelden.html verweisen -->
+            <input type="submit" value="registrieren" id="submitBtn">
+        </div>
+        <div class="red">
+           <!-- <?php echo $error; ?>  -->
+        </div>
+    </form>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
