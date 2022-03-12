@@ -54,14 +54,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo $nachricht;
         ?> -->
     </div>
-    <form method="post" action="Anmelden.html">
-        Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
-        Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
-        <div class="wrapper">
-            <a href="Registrieren.html">Jetzt registrieren!</a>
-            <input type="submit" value="anmelden" onclick="anmelden()">
-        </div>
-    </form>
+    Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
+    Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
+    <div class="wrapper">
+        <a href="Registrieren.html">Jetzt registrieren!</a>
+        <input type="submit" value="anmelden" onclick="anmelden()">
+    </div>
     <div class="red" id="erroranm">
         <!-- <?php echo $error; ?> -->
     </div>

@@ -19,6 +19,8 @@ function registrieren () {
     } else if (passwort !== passwort2) {
         table.innerHTML = `<p>Die Passwörter sind nicht gleich!</p>`;
         return;
+    } else {
+        table.innerhtml = `<p>du wirst registriert, bitte hab geduld!</p>`;
     }
 
     fetch('http://localhost:2500/insert', {
@@ -33,6 +35,7 @@ function registrieren () {
 
 function anmelden() {
     let table = document.getElementById('erroranm');
+    console.log('test')
     const nutzernameInput = document.querySelector('#nutzername');
     const nutzername = nutzernameInput.value;
     const passwortInput = document.querySelector('#passwort');
@@ -40,10 +43,32 @@ function anmelden() {
     if (nutzername === "" || passwort === "") {
         table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
         return;
+    } else {
+        table.innerHTML = `<p>du wirst angemeldet, bitte hab geduld!</p>`;
     }
-    fetch('http://localhost:2500/getAllUser')
-        .then(response => response.json())
-        .then(data => loadUser(data['data'], nutzername, passwort, table));
+
+    fetch('http://localhost:2500/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nutzername,
+            passwort,
+        })
+    }).then(res => res.json())
+        .then(res => {
+        console.log(res);
+        if (res.error) {
+            table.innerHTML = res.error;
+        } else {
+            table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
+        }
+    });
+
+    // fetch('http://localhost:2500/getAllUser')
+    //     .then(response => response.json())
+    //     .then(data => loadUser(data['data'], nutzername, passwort, table));
 }
 
 function loadUser(data, nutzername, passwort, table) {

@@ -6,6 +6,7 @@ dotenv.config();
 const connection = mysql.createConnection({
     host: process.env.HOST,
     user: process.env.USERS,
+    password: '1234',
     database: process.env.DATABASE,
     port: process.env.DB_PORT
 })
@@ -90,6 +91,17 @@ class DbService {
         } catch (error) {
             console.log(error);
         }
+    }
+
+    async getUser(nutzername, passwort) {
+        return await new Promise((resolve, reject) => {
+            const query = "SELECT id, Benutzername FROM Nutzerdaten WHERE Benutzername = ? AND Passwort = ?";
+
+            connection.query(query, [nutzername, passwort], (err, res) => {
+                if (err) reject(new Error(err.message));
+                resolve(res);
+            })
+        });
     }
 }
 
