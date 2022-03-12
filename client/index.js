@@ -81,9 +81,9 @@ function loadHTMLTable(data) {
         tableHtml += "<tr>";
         tableHtml += `<td>${ID}</td>`;
         tableHtml += `<td>${Benutzername}</td>`;
-        tableHtml += `<td>${Passwort}/td>`;
-        tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</td>`;
-        tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</td>`;
+        tableHtml += `<td>${Passwort}</td>`;
+        tableHtml += `<td></td>`;
+        tableHtml += `<td></td>`;
         tableHtml += "</tr>";
     });
 
