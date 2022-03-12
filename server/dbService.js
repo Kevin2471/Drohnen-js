@@ -22,7 +22,7 @@ class DbService {
         return instance ? instance : new DbService();
     }
 
-    async getAllData() {
+    async getAllUser() {
         try {
             const response = await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM nutzerdaten;";
@@ -32,7 +32,41 @@ class DbService {
                     resolve(res);
                 })
             });
-            console.log('daten sind geladen');
+            console.log('User sind geladen');
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getAllComments() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM kommentare;";
+
+                connection.query(query, (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
+            console.log('Kommentare sind geladen');
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getAllPosts() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM themen;";
+
+                connection.query(query, (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
+            console.log('Posts sind geladen');
             return response;
         } catch (error) {
             console.log(error);

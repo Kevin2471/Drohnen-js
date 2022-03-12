@@ -21,11 +21,35 @@ app.post('/insert', (req, res) => {
         .catch(err => console.log(err));
 });
 
-//read
-app.get('/getAll', (req, res) => {
+//read User
+app.get('/getAllUser', (req, res) => {
     const db = dbService.getDbServiceInstance();
 
-    const result = db.getAllData();
+    const result = db.getAllUser();
+
+    result
+        .then(data => res.json({data : data}))
+        .catch(err => console.log(err));
+    console.log('daten sind bereit')
+});
+
+//read Comments
+app.get('/getAllComments', (req, res) => {
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllComments()
+
+    result
+        .then(data => res.json({data : data}))
+        .catch(err => console.log(err));
+    console.log('daten sind bereit')
+});
+
+//read Posts
+app.get('/getAllPosts', (req, res) => {
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getAllPosts()
 
     result
         .then(data => res.json({data : data}))
