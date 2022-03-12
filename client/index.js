@@ -127,7 +127,7 @@ function loadPosts(data) {
     }
 
     let tableHtml = "";
-//TODO Link anpassen
+
     data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
@@ -140,7 +140,7 @@ function loadPosts(data) {
         tableHtml += `<p class="textrechts">Kommentare: --</p>`
         tableHtml += `</div>`
         tableHtml += `<h3>`
-        tableHtml += `<a class="black unterstrichen" >${Titel}</a>`
+        tableHtml += `<a class="black unterstrichen" >${Titel}</a>` /* TODO link anpassen */
         tableHtml += `</h3>`
         tableHtml += `</div>`
         tableHtml += `</div>`
