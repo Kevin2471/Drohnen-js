@@ -1,33 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:2500/getAllUser')
-        .then(response => response.json())
-        .then(data => loadUser(data['data']));
     fetch('http://localhost:2500/getAllPosts')
         .then(response => response.json())
         .then(data => loadPosts(data['data']));
 });
 
-const submitBtn = document.querySelector('#submitBtn');
-
-submitBtn.onclick = function () {
+function registrieren () {
+    let table = document.getElementById('errorreg');
     const nutzernameInput = document.querySelector('#nutzername');
     const nutzername = nutzernameInput.value;
-    nutzernameInput.value = "";
-    /*
     const passwortInput = document.querySelector('#passwort');
     const passwort = passwortInput.value;
-    passwortInput.value = "";
     const passwort2Input = document.querySelector('#passwort2');
     const passwort2 = passwort2Input.value;
-    passwort2Input.value = "";
 
     if (nutzername === "" || passwort === "" || passwort2 === "") {
-        window.alert("Bitte füllen Sie alle Felder aus!");
+        table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
         return;
     } else if (passwort !== passwort2) {
-        window.alert("Die Passwörter sind nicht gleich!");
+        table.innerHTML = `<p>Die Passwörter sind nicht gleich!</p>`;
         return;
-    } */
+    }
 
     fetch('http://localhost:2500/insert', {
         headers: {
@@ -37,59 +29,42 @@ submitBtn.onclick = function () {
         body: JSON.stringify({nutzername: nutzername})
     })
         .then(response => response.json())
-        .then(data => insertRowIntoTable(data['data']));
 }
 
-function insertRowIntoTable(data) {
-    console.log(data);
-    const table = document.querySelector('table tbody');
-    const isTableData = table.querySelector('.no-data');
-
-    let tableHtml = "<tr>";
-
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            if (key === 'dateAdded') {
-                data[key] = new Date(data[key]).toLocaleString();
-            }
-            tableHtml += `<td>${data[key]}</td>`;
-        }
+function anmelden() {
+    let table = document.getElementById('erroranm');
+    const nutzernameInput = document.querySelector('#nutzername');
+    const nutzername = nutzernameInput.value;
+    const passwortInput = document.querySelector('#passwort');
+    const passwort = passwortInput.value;
+    if (nutzername === "" || passwort === "") {
+        table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
+        return;
     }
-
-    tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</td>`;
-    tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</td>`;
-
-    tableHtml += "</tr>";
-
-    if (isTableData) {
-        table.innerHTML = tableHtml;
-    } else {
-        const newRow = table.insertRow();
-        newRow.innerHTML = tableHtml;
-    }
+    fetch('http://localhost:2500/getAllUser')
+        .then(response => response.json())
+        .then(data => loadUser(data['data'], nutzername, passwort, table));
 }
 
-function loadUser(data) {
-    const table = document.querySelector('table tbody');
-
+function loadUser(data, nutzername, passwort, table) {
     if (data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        table.innerHTML = `<p>Bitte überprüfen Sie den Nutzernamen und das Passwort!</p>`;
         return;
     }
 
-    let tableHtml = "";
-
-    data.forEach(function ({ID, Benutzername, Passwort}) {
-        tableHtml += "<tr>";
-        tableHtml += `<td>${ID}</td>`;
-        tableHtml += `<td>${Benutzername}</td>`;
-        tableHtml += `<td>${Passwort}</td>`;
-        tableHtml += `<td></td>`;
-        tableHtml += `<td></td>`;
-        tableHtml += "</tr>";
+    let found = false;
+    data.forEach(function ({Benutzername, Passwort}) {
+        if (nutzername === Benutzername && passwort === Passwort) {
+            found = true;
+        }
     });
-
-    table.innerHTML = tableHtml;
+    if (found === true) {
+        window.alert("Yes Sir");
+        table.innerHTML = `<p>Erfolgreich anmgemeldet!</p>`;
+    } else {
+        window.alert("No Sir");
+        table.innerHTML = `<p>Bitte überprüfen Sie den Nutzernamen und das Passwort!</p>`;
+    }
 }
 
 function fetchCallComments(titel) {

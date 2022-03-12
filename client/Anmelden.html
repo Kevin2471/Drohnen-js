@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>Drohnen Forum</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
+    <script src="index.js"></script>
 </head>
 <body>
 
-<?php
+<!-- <?php
 SESSION_START();
 $error = "";
 $nachricht = "";
@@ -43,27 +44,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $con->close();
     }
 }
-?>
+?> -->
 
 <h1 class="Überschrift center">Willkommen auf dem Drohnenforum!</h1>
 
 <div class="formular">
     <div class="left">
-        <?php
+        <!-- <?php
         echo $nachricht;
-        ?>
+        ?> -->
     </div>
-    <form method="post" action="Anmelden.php">
-        Nutzername: <input type="text" name="nutzername"> <br> <br>
-        Passwort: <input type="password" name="passwort"> <br> <br>
+    <form method="post" action="Anmelden.html">
+        Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
+        Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
         <div class="wrapper">
-            <a href="Registrieren.php">Jetzt registrieren!</a>
-            <input type="submit" value="anmelden">
+            <a href="Registrieren.html">Jetzt registrieren!</a>
+            <input type="submit" value="anmelden" onclick="anmelden()">
         </div>
     </form>
-    <div class="red">
-        <?php echo $error; ?>
+    <div class="red" id="erroranm">
+        <!-- <?php echo $error; ?> -->
     </div>
+</div>
 
 </body>
 </html>
