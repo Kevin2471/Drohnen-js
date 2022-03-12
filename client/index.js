@@ -96,7 +96,7 @@ function loadUser(data) {
 }
 
 function loadComments(data) {
-    const table = document.querySelector('table tbody');
+    const table = document.querySelector('');
 
     if (data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
@@ -122,13 +122,13 @@ function loadPosts(data) {
     const table = document.querySelector('.Posts');
 
     if (data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
+        table.innerHTML = `<p>Keine Beiträge vorhanden!</p>`;
         return;
     }
 
     let tableHtml = "";
 //TODO Link anpassen
-    data.forEach(function ({ID, Titel, Text, Benutzername, Zeitstempel}) {
+    data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
         tableHtml += `<div class='wrapper'>`

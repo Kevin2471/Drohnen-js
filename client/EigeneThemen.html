@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Hauptseite</title>
+    <title>eigene Themen</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
 </head>
 <body>
-
 <div class="header">
     <h1 class="Überschrift center">
         Drohnenforum
@@ -14,25 +13,25 @@
 </div>
 <ul>
     <li>
-        <a class="aktiv" href="Hauptseite.html">alle Themen</a>
+        <a href="Hauptseite.html">alle Themen</a>
     </li>
     <li>
-        <a href="EigeneThemen.html">eigene Themen</a>
+        <a class="aktiv" href="EigeneThemen.html">eigene Themen</a>
     </li>
     <li>
-        <a href="ThemaErstellen.html">neues Thema erstellen</a>
+        <a href="ThemaErstellen.php">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.html?abmelden=">abmelden</a>
+        <a href="Anmelden.html?abmelden=" >abmelden</a>
     </li>
 </ul>
 
-<div class="Textfeld Posts">
-
-
+<div class="Textfeld">
     <!--
-
     <?php
+    if (isset($_GET["gelöscht"])) {
+        echo "<p class='red'>Beitrag wurde gelöscht!</p>";
+    }
     session_start();
     if ($_SESSION['Benutzername'] === null) {
         header('location: Anmelden.html');
@@ -46,15 +45,16 @@
         $res = $con->query($data);
         if ($res->num_rows > 0) {
             while ($i = $res->fetch_assoc()) {
-                $time = date('d.m.Y - H:i:s', $i['Zeitstempel']);
-                $data2 = "SELECT * FROM Kommentare";
-                $res2 = $con->query($data2);
-                while ($j = $res2->fetch_assoc()) {
-                    if ($j['Titel'] === $i['Titel']) {
-                        $numberof ++;
+                if ($i["Benutzername"] === $_SESSION["Benutzername"]) {
+                    $time = date('d.m.Y - H:i:s', $i['Zeitstempel']);
+                    $data2 = "SELECT * FROM Kommentare";
+                    $res2 = $con->query($data2);
+                    while ($j = $res2->fetch_assoc()) {
+                        if ($j['Titel'] === $i['Titel']) {
+                            $numberof ++;
+                        }
                     }
-                }
-                echo "<div class='themen'>
+                    echo "<div class='themen'>
                             <div class='abstandlinksrechts'>
                                 <div class='wrapper'>
                                     <p>Beitrag von: $i[Benutzername]</p>
@@ -64,12 +64,16 @@
                                     <h3>Titel:</h3>
                                     <p class='textrechts'>Kommentare: $numberof</p>
                                 </div>
-                                <h3>
-                                    <a class='black unterstrichen' href='Thema.php?thema=$i[Titel]&seite=0'>$i[Titel]</a>
-                                </h3>
+                                <div class='wrapper'>
+                                    <h3>
+                                        <a class='black unterstrichen' href='Thema.php?thema=$i[Titel]&seite=eins'>$i[Titel]</a>
+                                    </h3>
+                                    <a href='ThemaÄndern.php?thema=$i[Titel]'>Bearbeiten</a>
+                                </div>
                             </div>
                         </div>";
-                $numberof = 0;
+                    $numberof = 0;
+                }
             }
         }
     }
@@ -77,7 +81,6 @@
 
     -->
 </div>
-<script src="index.js"></script>
 
 </body>
 </html>
