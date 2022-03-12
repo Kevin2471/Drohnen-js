@@ -2,9 +2,6 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch('http://localhost:2500/getAllUser')
         .then(response => response.json())
         .then(data => loadUser(data['data']));
-    fetch('http://localhost:2500/getAllComments')
-        .then(response => response.json())
-        .then(data => loadComments(data['data']));
     fetch('http://localhost:2500/getAllPosts')
         .then(response => response.json())
         .then(data => loadPosts(data['data']));
@@ -95,9 +92,15 @@ function loadUser(data) {
     table.innerHTML = tableHtml;
 }
 
-function loadComments(data) {
-    const table = document.querySelector('');
+function fetchCallComments(titel) {
+    console.log('läuft');
+    fetch('http://localhost:2500/getAllComments')
+        .then(response => response.json())
+        .then(data => loadComments(data['data'], titel));
+}
 
+function loadComments(data, titel) {
+    const table = document.querySelector('.commentjs');
     if (data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
         return;
@@ -105,16 +108,45 @@ function loadComments(data) {
 
     let tableHtml = "";
 
-    data.forEach(function ({ID, Benutzername, Passwort}) {
-        tableHtml += "<tr>";
-        tableHtml += `<td>${ID}</td>`;
-        tableHtml += `<td>${Benutzername}</td>`;
-        tableHtml += `<td>${Passwort}</td>`;
-        tableHtml += `<td></td>`;
-        tableHtml += `<td></td>`;
-        tableHtml += "</tr>";
+    data.forEach(function ({Titel, Kommentar, Benutzername, Zeitstempel}) {
+        if (Titel === titel) {
+            tableHtml += ' <div class="themen">';
+            tableHtml += '<div class="abstandlinksrechts">';
+            tableHtml += '<div class="wrapper linieunten">';
+            tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
+            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
+            tableHtml += '</div>';
+            tableHtml += `<p>${Kommentar}</p>`;
+            tableHtml += '</div>';
+            tableHtml += '</div>';
+        }
     });
 
+    table.innerHTML = tableHtml;
+}
+
+function fetchPost(titel) {
+    fetch('http://localhost:2500/getAllPosts')
+        .then(response => response.json())
+        .then(data => loadPost(data['data'], titel));
+}
+
+function loadPost(data, titel) {
+    const table = document.querySelector('.Post');
+    let tableHtml = "";
+    data.forEach(function ({Titel, Text, Benutzername, Zeitstempel}) {
+        if (Titel === titel) {
+            tableHtml += '<div class="themen">';
+            tableHtml += '<div class="abstandlinksrechts">';
+            tableHtml += '<div class="wrapper linieunten">';
+            tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
+            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
+            tableHtml += '</div>';
+            tableHtml += `<p>${Text}</p>`;
+            tableHtml += '</div>';
+            tableHtml += '</div>';
+        }
+    })
     table.innerHTML = tableHtml;
 }
 
@@ -127,7 +159,6 @@ function loadPosts(data) {
     }
 
     let tableHtml = "";
-
     data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
@@ -140,7 +171,7 @@ function loadPosts(data) {
         tableHtml += `<p class="textrechts">Kommentare: --</p>`
         tableHtml += `</div>`
         tableHtml += `<h3>`
-        tableHtml += `<a class="black unterstrichen" >${Titel}</a>` /* TODO link anpassen */
+        tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>` /* TODO link anpassen */
         tableHtml += `</h3>`
         tableHtml += `</div>`
         tableHtml += `</div>`

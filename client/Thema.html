@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Thema "thema name"</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
+    <script src="index.js"></script>
 </head>
 <body>
-
+<!--
 <?php
 SESSION_START();
 if ($_SESSION['Benutzername'] === null) {
@@ -36,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 ?>
+-->
 <div class="header">
     <h1 class="Überschrift center">
         Drohnenforum
@@ -43,21 +45,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 <ul>
     <li>
-        <a href="Hauptseite.php">alle Themen</a>
+        <a href="Hauptseite.html">alle Themen</a>
     </li>
     <li>
-        <a href="EigeneThemen.php">eigene Themen</a>
+        <a href="EigeneThemen.html">eigene Themen</a>
     </li>
     <li>
-        <a href="ThemaErstellen.php">neues Thema erstellen</a>
+        <a href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.php?abmelden=">abmelden</a>
+        <a href="Anmelden.html?abmelden=">abmelden</a>
     </li>
 </ul>
 
 <div class="Textfeld">
-
+    <script>
+        let titel= location.search;
+        titel = titel.substring(1, titel.length);
+        titel = titel.replaceAll('%20',' ');
+        fetchCallComments(titel);
+        fetchPost(titel);
+        document.write(`<h2>Titel: ${titel}</h2>`);
+    </script>
+    <div class="Post"></div>
+<!--
     <?php
     $con = new mysqli("localhost", "root", "", "Drohnen");
     $link = "Thema.php" . $titel;
@@ -80,13 +91,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <p>Datum und Uhrzeit: $time</p>
                                 </div>
                                     <p>$i[Text]</p>
-                            </div>    
+                            </div>
                         </div>";
             }
         }
     }
     ?>
+    -->
     <h3 class="kommentar">Kommentare:</h3>
+    <!--
     <?php
     $count = 0;
     $alleKommentare = "";
@@ -107,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <p>Datum und Uhrzeit: $time</p>
                                 </div>
                                     <p>$i[Kommentar]</p>
-                            </div>    
+                            </div>
                         </div>";
                 }
             }
@@ -117,18 +130,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     ?>
+    -->
+    <div class="commentjs kommentar"></div>
     <form method="post" class="kommentar">
         <br>Kommentar hinzufügen:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
         <div class="red">
             <?php echo $error; ?>
         </div>
         <div class="wrapper">
-            <div class="box1"><a href=<?php echo $linkzuruck ?>>zurück</a></div>
+            <div class="box1"><a>zurück</a></div>
             <div class="box2"><input type="submit" value="absenden" class="absenden"></div>
         </div>
     </form>
 
 </div>
-
 </body>
 </html>
