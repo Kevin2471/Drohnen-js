@@ -116,7 +116,6 @@ function themaErstellen() {
     })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
