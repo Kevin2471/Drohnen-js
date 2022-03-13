@@ -30,7 +30,8 @@ function registrierenCheck() {
         },
         method: 'POST',
         body: JSON.stringify({
-            nutzername
+            nutzername,
+            passwort
         })
     })
         .then(res => res.json())
@@ -39,30 +40,7 @@ function registrierenCheck() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                registrieren(nutzername, passwort, table);
-            }
-        })
-}
-
-function registrieren(nutzername, passwort, table) {
-    fetch ('http://localhost:2500/register', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            nutzername,
-            passwort
-        })
-    })
-        .then(res => res.json())
-        .then(res => {
-            if (res.error) {
-                table.innerHTML = res.error;
-            } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html');
-               // let table = document.getElementById('erroranm');
-               // table.innerHTML = '<p>Sie sind erfolgreich registriert!</p>';
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?regestriert');
             }
         })
 }
@@ -97,6 +75,7 @@ function anmelden () {
             table.innerHTML = res.error;
         } else {
             window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+            storage.set('user', nutzername)
             // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
         }
     });

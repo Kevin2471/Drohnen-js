@@ -7,52 +7,15 @@
     <script src="index.js"></script>
 </head>
 <body>
-
-<!-- <?php
-SESSION_START();
-$error = "";
-$nachricht = "";
-if (isset($_GET["abmelden"])) {
-    $_SESSION["Benutzername"] = null;
-    $nachricht = "Du wurdest erfogreich abgemeldet!";
-}
-if (isset($_GET["registrierung"])) {
-    $nachricht = "Die Registrierung war erfolgreich!";
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['nutzername']) or empty($_POST['passwort'])) {
-        $error = "Bitte gebe einen Nutzernamen ein";
-    } else {
-        $con = new mysqli("localhost", "root", "", "Drohnen");
-        if ($con->connect_error) {
-            $error = "Du bist nicht mit der Datenbank verbunden";
-        } else {
-            $data = "SELECT * FROM Nutzerdaten";
-            $res = $con->query($data);
-            if ($res->num_rows > 0) {
-                while ($i = $res->fetch_assoc()) {
-                    if ($_POST['nutzername'] === $i['Benutzername'] and $_POST['passwort'] === $i['Passwort']) {
-                        $_SESSION["Benutzername"] = $_POST['nutzername'];
-                        header('location: Hauptseite.php');
-                    }
-                }
-            }
-            if (empty($error)) {
-                $error = "nicht erfolgreich";
-            }
-        }
-        $con->close();
-    }
-}
-?> -->
-
 <h1 class="Überschrift center">Willkommen auf dem Drohnenforum!</h1>
 
 <div class="formular">
     <div class="left">
-        <!-- <?php
-        echo $nachricht;
-        ?> -->
+        <script>
+            if (location.search === '?registriert') {
+                document.write('<p>Die Registrierung war erfolgreich!</p>')
+            }
+        </script>
     </div>
     Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
     Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
@@ -61,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="anmelden" onclick="anmelden()">
     </div>
     <div class="red" id="erroranm">
-        <!-- <?php echo $error; ?> -->
     </div>
 </div>
 

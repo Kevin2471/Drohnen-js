@@ -91,7 +91,7 @@ class DbService {
     async getUserByNuP(nutzername, passwort) {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT Benutzername FROM Nutzerdaten WHERE Benutzername = ? AND Passwort = ?;";
+                const query = "SELECT id, Benutzername FROM Nutzerdaten WHERE Benutzername = ? AND Passwort = ?;";
 
                 connection.query(query, [nutzername, passwort], (err, res) => {
                     if (err) reject(new Error(err.message));
@@ -107,7 +107,7 @@ class DbService {
     async getUserByN(nutzername) {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT Benutzername FROM Nutzerdaten WHERE Benutzername = ?;";
+                const query = "SELECT id, Benutzername FROM Nutzerdaten WHERE Benutzername = ?;";
 
                 connection.query(query, [nutzername], (err, res) => {
                     if (err) reject(new Error(err.message));
