@@ -121,15 +121,15 @@ function fetchCallComments(titel, count) {
 }
 
 function loadComments(data, titel, count) {
+    let numbers = 0;
     const table = document.querySelector('.commentjs');
-    if (data.length === 0) {
-        table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
-        return;
-    }
+    console.log(data.length);
+
     let tableHtml = "";
 
     data.forEach(function ({Titel, Kommentar, Benutzername, Zeitstempel}) {
         if (Titel === titel) {
+            numbers++;
             counter += 1;
             tableHtml += ' <div class="themen">';
             tableHtml += '<div class="abstandlinksrechts">';
@@ -142,6 +142,11 @@ function loadComments(data, titel, count) {
             tableHtml += '</div>';
         }
     });
+    if (numbers === 0) {
+        numbers = 0;
+        table.innerHTML = "<p>Keine Kommentare vorhanden.</p>";
+        return;
+    }
     if (count !== true) {
         table.innerHTML = tableHtml;
     }
@@ -188,7 +193,6 @@ function loadPosts(data) {
 
     let tableHtml = "";
     data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
-        fetchCallComments(Titel, true)
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
         tableHtml += `<div class='wrapper'>`
@@ -211,41 +215,7 @@ function loadPosts(data) {
 }
 
 function fetchOwnPosts() {
-    fetch('http://localhost:2500/getAllPosts')
+    fetch('http://localhost:2500/getOwnPosts')
         .then(response => response.json())
-        .then(data => loadOwnPosts(data['data']));
-}
-
-function loadOwnPosts(data) {
-    const table = document.querySelector('.OwnPosts');
-
-    if (data.length === 0) {
-        table.innerHTML = `<p>Keine Beiträge vorhanden!</p>`;
-        return;
-    }
-
-    let tableHtml = "";
-    data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
-        if(true) {
-            fetchCallComments(Titel, true)
-            tableHtml += `<div class='themen'>`
-            tableHtml += `<div class='abstandlinksrechts'>`
-            tableHtml += `<div class='wrapper'>`
-            tableHtml += `<p> Beitrag von: ${Benutzername} </p>`
-            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`
-            tableHtml += `</div>`
-            tableHtml += `<div class="wrapper">`
-            tableHtml += `<h3>Titel:</h3>`
-            tableHtml += `<p class="textrechts">Kommentare: ${counter}</p>`
-            tableHtml += `</div>`
-            tableHtml += `<h3>`
-            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
-            tableHtml += `</h3>`
-            tableHtml += `</div>`
-            tableHtml += `</div>`
-            counter = 0;
-        }
-    });
-
-    table.innerHTML = tableHtml;
+        .then(data => loadPosts(data['data']));
 }

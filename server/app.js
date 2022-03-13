@@ -113,6 +113,16 @@ app.get('/getAllPosts', (req, res) => {
         .catch(err => console.log(err));
 });
 
+app.get('/getOwnPosts', (req, res) => {
+    const db = dbService.getDbServiceInstance();
+
+    const result = db.getOwnPosts(storage.getStorage('user'))
+
+    result
+        .then(data => res.json({data: data}))
+        .catch(err => console.log(err));
+});
+
 //update
 
 

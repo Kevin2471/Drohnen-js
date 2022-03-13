@@ -24,7 +24,7 @@ class DbService {
 
     async getAllUser() {
         try {
-            const response = await new Promise((resolve, reject) => {
+            return await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM Nutzerdaten;";
 
                 connection.query(query, (err, res) => {
@@ -32,7 +32,6 @@ class DbService {
                     resolve(res);
                 })
             });
-            return response;
         } catch (error) {
             console.log(error);
         }
@@ -40,7 +39,7 @@ class DbService {
 
     async getAllComments() {
         try {
-            const response = await new Promise((resolve, reject) => {
+            return await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM Kommentare;";
 
                 connection.query(query, (err, res) => {
@@ -48,7 +47,6 @@ class DbService {
                     resolve(res);
                 })
             });
-            return response;
         } catch (error) {
             console.log(error);
         }
@@ -56,7 +54,7 @@ class DbService {
 
     async getAllPosts() {
         try {
-            const response = await new Promise((resolve, reject) => {
+            return await new Promise((resolve, reject) => {
                 const query = "SELECT * FROM Themen;";
 
                 connection.query(query, (err, res) => {
@@ -64,7 +62,21 @@ class DbService {
                     resolve(res);
                 })
             });
-            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getOwnPosts(name) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const query = "SELECT * FROM Themen WHERE Benutzername = ?;";
+
+                connection.query(query, [name], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
         } catch (error) {
             console.log(error);
         }
