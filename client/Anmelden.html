@@ -10,7 +10,9 @@
 <h1 class="Überschrift center">Willkommen auf dem Drohnenforum!</h1>
 
 <div class="formular">
+
     <div class="left">
+
         <script>
             if (location.search === '?registriert') {
                 document.write('<p>Die Registrierung war erfolgreich!</p>')
@@ -18,15 +20,18 @@
                 document.write('<p>Sie wurden erfolgreich abgemeldet!</p>')
             }
         </script>
+
     </div>
+
     Nutzername: <input type="text" name="nutzername" id="nutzername"> <br> <br>
     Passwort: <input type="password" name="passwort" id="passwort"> <br> <br>
     <div class="wrapper">
         <a href="Registrieren.html">Jetzt registrieren!</a>
         <input type="submit" value="anmelden" onclick="anmelden()">
     </div>
-    <div class="red" id="erroranm">
-    </div>
+
+    <div class="red" id="erroranm"></div>
+
 </div>
 
 </body>

@@ -7,43 +7,6 @@
     <script src="index.js"></script>
 </head>
 <body>
-<!--
-<?php
-session_start();
-if ($_SESSION['Benutzername'] === null) {
-    header('location: Anmelden.php');
-}
-$error = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['titel']) or empty($_POST['textarea'])) {
-        $error = "Bitte fülle alle Felder aus!";
-    } else {
-        $con = new mysqli("localhost", "root", "", "Drohnen");
-        if ($con->connect_error) {
-            $error = "Du bist nicht mit der Datenbank verbunden";
-        } else {
-            $data = "SELECT * FROM Themen";
-            $res = $con->query($data);
-            if ($res->num_rows > 0) {
-                while ($i = $res->fetch_assoc()) {
-                    if ($_POST['titel'] === $i['Titel']) {
-                        $error = "Dieser Titel ist bereits vergeben";
-                    }
-                }
-            }
-            if (empty($error)) {
-                $time = time();
-                $sql = "INSERT INTO Themen(Titel, Text, Benutzername, Zeitstempel) VALUES('$_POST[titel]', '$_POST[textarea]', '$_SESSION[Benutzername]', '$time')";
-                $con->query($sql);
-                $error = "Thema erfolgreich geteilt";
-            }
-        }
-
-        $con->close();
-    }
-}
-?> -->
-
 <div class="header">
     <h1 class="Überschrift center">
         Drohnenforum
@@ -72,13 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     Titel:<br> <input type="text" name="titel" class="textarea" id="themaTitel"><br><br>
     Text:<br> <textarea rows="6" name="textarea" class="textarea" id="themaText"></textarea><br><br>
     <div class="red" id="errorte">
-        <!-- <?php echo $error; ?> -->
     </div>
     <div class="wrapper">
         <div><a href="Hauptseite.html">abbrechen</a></div>
         <div><input type="submit" value="absenden" class="absenden" onclick="themaErstellen()"></div>
     </div>
-
 </div>
 </body>
 </html>

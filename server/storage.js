@@ -1,9 +1,6 @@
 const storage = new function () {
-    /* --------- Private Properties --------- */
 
     let dataContainer = {};
-
-    /* --------- Public Methods --------- */
 
     this.set = function (name, value) {
         dataContainer[name] = value;
@@ -18,7 +15,7 @@ const storage = new function () {
     };
 
     this.remove = function (name) {
-        if (typeof(dataContainer[name]) !== undefined) {
+        if (typeof (dataContainer[name]) !== undefined) {
             delete dataContainer[name];
         }
     };

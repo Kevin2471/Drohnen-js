@@ -115,6 +115,7 @@ app.post('/getAllComments', async (req, res) => {
     res.send({result});
 });
 
+// read number of comments
 app.post('/getNumberComments', async (req, res) => {
     const {themaTitel} = req.body;
     const db = dbService.getDbServiceInstance();
@@ -155,6 +156,7 @@ app.post('/update', async (req, res) => {
         res.send(err);
     }
 });
+
 //delete
 app.post('/delete', async (req, res) => {
     const {themaTitel} = req.body;

@@ -81,13 +81,13 @@ function anmelden() {
     })
         .then(res => res.json())
         .then(res => {
-        console.log(res);
-        if (res.error) {
-            table.innerHTML = res.error;
-        } else {
-            window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
-        }
-    });
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+            }
+        });
 }
 
 function themaErstellen() {
@@ -228,20 +228,17 @@ function loadComments(data) {
     let tableHtml = "";
 
     data.forEach(function ({Kommentar, Benutzername, Zeitstempel}) {
-            numbers++;
-            tableHtml += ' <div class="themen">';
-            tableHtml += '<div class="abstandlinksrechts">';
-            tableHtml += '<div class="wrapper linieunten">';
-            tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
-            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
-            tableHtml += '</div>';
-            tableHtml += `<p>${Kommentar}</p>`;
-            tableHtml += '</div>';
-            tableHtml += '</div>';
-
-        }
-    )
-    ;
+        numbers++;
+        tableHtml += ' <div class="themen">';
+        tableHtml += '<div class="abstandlinksrechts">';
+        tableHtml += '<div class="wrapper linieunten">';
+        tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
+        tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
+        tableHtml += '</div>';
+        tableHtml += `<p>${Kommentar}</p>`;
+        tableHtml += '</div>';
+        tableHtml += '</div>';
+    });
     if (numbers === 0) {
         numbers = 0;
         table.innerHTML = "<p>Keine Kommentare vorhanden.</p>";
