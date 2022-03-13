@@ -203,8 +203,6 @@ function beitragLoeschen() {
         .then(res => {
             if (res.error) {
                 console.log(res.error);
-            } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/EigeneThemen.html?geloescht');
             }
         })
 }

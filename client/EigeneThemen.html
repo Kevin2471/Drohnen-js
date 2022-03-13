@@ -30,14 +30,17 @@
     </li>
 </ul>
 
-<div class="Textfeld Posts">
+<div class="Textfeld">
     <script>
-        if (location.search === '?gelöscht') {
+        if (location.search === '?geloescht') {
             document.write('<p class="red">Beitrag wurde gelöscht!</p>');
         }
 
         fetchOwnPosts()
     </script>
+    <div class="Posts">
+
+    </div>
     <!--
     <?php
     if (isset($_GET["gelöscht"])) {

@@ -64,8 +64,6 @@ $con->close();
         let themaTitel= location.search;
         themaTitel = themaTitel.substring(1, themaTitel.length);
         themaTitel = themaTitel.replaceAll('%20',' ');
-        fetchCallComments(themaTitel);
-        fetchPost(themaTitel);
         document.write(`<h2>Titel: ${themaTitel}</h2>`);
     </script>
     <h3>Thema bearbeiten:</h3>
@@ -84,7 +82,7 @@ $con->close();
     </div>
     <br>
     <div class="textrechts">
-        <a onclick="beitragLoeschen()">Beitrag löschen</a>
+        <a href='http://localhost:63342/Drohnen-js/client/EigeneThemen.html?geloescht' onclick="beitragLoeschen()">Beitrag löschen</a>
     </div>
 
 </div>
