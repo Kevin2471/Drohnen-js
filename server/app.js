@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: false}));
 
 //login
 app.post('/login', async (req, res) => {
-    const { nutzername, passwort } = req.body;
+    const {nutzername, passwort} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -47,7 +47,7 @@ app.get('/deleteCurrentUser', (req, res) => {
 
 //register
 app.post('/registerCheck', async (req, res) => {
-    const { nutzername, passwort } = req.body;
+    const {nutzername, passwort} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -57,7 +57,7 @@ app.post('/registerCheck', async (req, res) => {
             res.send({error: 'Der Nutzername ' + nutzername + ' existiert bereits!'});
         } else {
             data = await db.insertNewUser(nutzername, passwort);
-            res.send({ data });
+            res.send({data});
         }
     } catch (err) {
         res.send(err);
@@ -66,7 +66,7 @@ app.post('/registerCheck', async (req, res) => {
 
 //create Thema
 app.post('/createThema', async (req, res) => {
-    const { themaTitel, themaText } = req.body;
+    const {themaTitel, themaText} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -76,7 +76,7 @@ app.post('/createThema', async (req, res) => {
             res.send({error: 'Der Titel ' + themaTitel + ' existiert bereits!'});
         } else {
             data = await db.insertNewThema(themaTitel, themaText, storage.getStorage('user'));
-            res.send({ data });
+            res.send({data});
         }
     } catch (err) {
         res.send(err);
@@ -85,29 +85,16 @@ app.post('/createThema', async (req, res) => {
 
 //add Kommentar
 app.post('/addKommentar', async (req, res) => {
-    const { themaTitel, kommentarText } = req.body;
+    const {themaTitel, kommentarText} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
         const data = await db.addKommentar(themaTitel, kommentarText, storage.getStorage('user'));
-        res.send({ data });
+        res.send({data});
     } catch (err) {
         res.send(err);
     }
 });
-
-//add Kommentar
-app.post('/addKommentar', async (req, res) => {
-    const { themaTitel, kommentarText } = req.body;
-    const db = dbService.getDbServiceInstance();
-
-    try {
-        const data = await db.addKommentar(themaTitel, kommentarText, storage.getStorage('user'));
-        res.send({ data });
-    } catch (err) {
-        res.send(err);
-    }
-})
 
 //read User
 app.get('/getAllUser', (req, res) => {
@@ -142,6 +129,7 @@ app.get('/getAllPosts', (req, res) => {
         .catch(err => console.log(err));
 });
 
+//read own Posts
 app.get('/getOwnPosts', (req, res) => {
     const db = dbService.getDbServiceInstance();
 
@@ -153,8 +141,26 @@ app.get('/getOwnPosts', (req, res) => {
 });
 
 //update
-
-
+app.get('/update', async (req, res) => {
+    const {themaTitel, themaText} = req.body;
+    const db = dbService.getDbServiceInstance();
+    try {
+        const data = await db.updateThema(themaTitel, themaText);
+        res.send({data});
+    } catch (err) {
+        res.send(err);
+    }
+});
 //delete
+app.get('/delete', async (req, res) => {
+    const {themaTitel} = req.body;
+    const db = dbService.getDbServiceInstance();
+    try {
+        const data = await db.deleteThema(themaTitel);
+        res.send({data});
+    } catch (err) {
+        res.send(err);
+    }
+});
 
 app.listen(process.env.PORT, () => console.log('app is running'));

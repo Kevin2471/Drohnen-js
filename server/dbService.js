@@ -175,10 +175,16 @@ class DbService {
         }
     }
 
-    async deleteThema(titel) {
+    async deleteThema(themaTitel) {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT Titel FROM Themen WHERE Titel = ?;";
+                let query = "DELETE FROM Themen WHERE Titel = ?;";
+
+                connection.query(query, [themaTitel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+                query = "DELETE FROM Kommentare WHERE Titel = ?;";
 
                 connection.query(query, [themaTitel], (err, res) => {
                     if (err) reject(new Error(err.message));
@@ -190,8 +196,19 @@ class DbService {
         }
     }
 
-    async changeThema(titel) {
+    async updateThema(themaTitel, themaText) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const query = "UPDATE Themen SET Text = ? WHERE Titel = ?;";
 
+                connection.query(query, [themaText, themaTitel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
