@@ -34,7 +34,9 @@ app.post('/login', async (req, res) => {
 //get current user
 app.get('/getCurrentUser', (req, res) => {
     const result = storage.getStorage('user');
-    res.send({result});
+    if (result === undefined) {
+        res.send(true);
+    } else res.send(false);
 });
 
 //delete current user
@@ -76,6 +78,19 @@ app.post('/createThema', async (req, res) => {
             data = await db.insertNewThema(themaTitel, themaText, storage.getStorage('user'));
             res.send({ data });
         }
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+//add Kommentar
+app.post('/addKommentar', async (req, res) => {
+    const { themaTitel, kommentarText } = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    try {
+        const data = await db.addKommentar(themaTitel, kommentarText, storage.getStorage('user'));
+        res.send({ data });
     } catch (err) {
         res.send(err);
     }

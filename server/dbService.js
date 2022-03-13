@@ -174,6 +174,25 @@ class DbService {
             console.log(error);
         }
     }
+
+    async deleteThema(titel) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const query = "SELECT Titel FROM Themen WHERE Titel = ?;";
+
+                connection.query(query, [themaTitel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async changeThema(titel) {
+
+    }
 }
 
 module.exports = DbService;

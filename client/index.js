@@ -1,4 +1,16 @@
 let counter = 0;
+function checkLogIn() {
+    fetch('http://localhost:2500/getCurrentUser')
+        .then(response => response.json())
+        .then(response => checkUser(response))
+}
+
+function checkUser(data) {
+    if (data === true) {
+        window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html');
+    }
+}
+
 function registrierenCheck() {
     let table = document.getElementById('errorreg');
     const nutzernameInput = document.querySelector('#nutzername');
