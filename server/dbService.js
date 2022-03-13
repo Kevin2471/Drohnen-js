@@ -85,6 +85,22 @@ class DbService {
         }
     }
 
+    async insertNewThema(themaTitel, themaText, nutzername) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const zeitstempel = new Date();
+                const query = "INSERT INTO Themen (Titel, Text, Benutzername, Zeitstempel) VALUES (?,?,?,?);";
+
+                connection.query(query, [themaTitel, themaText, nutzername, zeitstempel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res.insertId);
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getUserByNuP(nutzername, passwort) {
         try {
             return await new Promise((resolve, reject) => {
@@ -107,6 +123,21 @@ class DbService {
                 const query = "SELECT id, Benutzername FROM Nutzerdaten WHERE Benutzername = ?;";
 
                 connection.query(query, [nutzername], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async getThema(themaTitel) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const query = "SELECT Titel FROM Themen WHERE Titel = ?;";
+
+                connection.query(query, [themaTitel], (err, res) => {
                     if (err) reject(new Error(err.message));
                     resolve(res);
                 })

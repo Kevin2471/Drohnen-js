@@ -58,10 +58,27 @@ app.post('/registerCheck', async (req, res) => {
             res.send({error: 'Der Nutzername ' + nutzername + ' existiert bereits!'});
         } else {
             data = await db.insertNewUser(nutzername, passwort);
-            res.send({data});
+            res.send({ data });
         }
     } catch (err) {
-        //console.log(err);
+        res.send(err);
+    }
+});
+
+app.post('/createThema', async (req, res) => {
+    const {themaTitel, themaText, nutzername} = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    try {
+        let data = await db.getThema(themaTitel);
+
+        if (data.length) {
+            res.send({error: 'Der Titel ' + themaTitel + ' existiert bereits!'});
+        } else {
+            data = await db.insertNewThema(themaTitel, themaText, nutzername);
+            res.send({ data });
+        }
+    } catch (err) {
         res.send(err);
     }
 });

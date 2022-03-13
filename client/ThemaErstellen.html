@@ -67,14 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="Textfeld">
     <h3>Neues Thema:</h3>
-    Titel:<br> <input type="text" name="titel" class="textarea"><br><br>
-    Text:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
-    <div class="red">
-        <?php echo $error; ?>
+    Titel:<br> <input type="text" name="titel" class="textarea" id="themaTitel"><br><br>
+    Text:<br> <textarea rows="6" name="textarea" class="textarea" id="themaText"></textarea><br><br>
+    <div class="red" id="errorte">
+        <!-- <?php echo $error; ?> -->
     </div>
     <div class="wrapper">
         <div><a href="Hauptseite.html">abbrechen</a></div>
-        <div><input type="submit" value="absenden" class="absenden"></div>
+        <div><input type="submit" value="absenden" class="absenden" onclick="themaErstellen()"></div>
     </div>
 
 </div>

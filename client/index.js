@@ -79,6 +79,41 @@ function anmelden () {
     });
 }
 
+function themaErstellen() {
+    let table = document.getElementById('errorte');
+    const themaTitelInput = document.querySelector('#themaTitel');
+    const themaTitel = themaTitelInput.value;
+    themaTitelInput.value = "";
+    const themaTextInput = document.querySelector('#themaText');
+    const themaText = themaTextInput.value;
+    themaTextInput.value = "";
+
+    if (themaTitel === "" || themaText === "") {
+        table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
+        return;
+    }
+
+    fetch('http://localhost:2500/createThema', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel,
+            themaText
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?regestriert');
+            }
+        })
+}
+
 function fetchCallComments(titel, count) {
     fetch('http://localhost:2500/getAllComments')
         .then(response => response.json())
