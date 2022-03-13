@@ -13,7 +13,7 @@ app.use(express.urlencoded({extended: false}));
 
 //login
 app.post('/login', async (req, res) => {
-    const {nutzername, passwort} = req.body;
+    const { nutzername, passwort } = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -45,7 +45,7 @@ app.get('/deleteCurrentUser', (req, res) => {
 
 //register
 app.post('/registerCheck', async (req, res) => {
-    const {nutzername, passwort} = req.body;
+    const { nutzername, passwort } = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -62,8 +62,9 @@ app.post('/registerCheck', async (req, res) => {
     }
 });
 
+//create Thema
 app.post('/createThema', async (req, res) => {
-    const {themaTitel, themaText} = req.body;
+    const { themaTitel, themaText } = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -79,6 +80,19 @@ app.post('/createThema', async (req, res) => {
         res.send(err);
     }
 });
+
+//add Kommentar
+app.post('/addKommentar', async (req, res) => {
+    const { themaTitel, kommentarText } = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    try {
+        const data = await db.addKommentar(themaTitel, kommentarText, storage.getStorage('user'));
+        res.send({ data });
+    } catch (err) {
+        res.send(err);
+    }
+})
 
 //read User
 app.get('/getAllUser', (req, res) => {

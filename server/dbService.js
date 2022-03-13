@@ -113,6 +113,22 @@ class DbService {
         }
     }
 
+    async addKommentar(themaTitel, kommentarText, nutzername) {
+        try {
+            return await new Promise((resolve, reject) => {
+                const zeitstempel = new Date();
+                const query = "INSERT INTO Kommentare (Titel, Kommentar, Benutzername, Zeitstempel) VALUES (?,?,?,?);";
+
+                connection.query(query, [themaTitel, kommentarText, nutzername, zeitstempel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res.insertId);
+                })
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async getUserByNuP(nutzername, passwort) {
         try {
             return await new Promise((resolve, reject) => {

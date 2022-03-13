@@ -126,7 +126,25 @@ function kommentarHinzufuegen(titel) {
         return;
     }
 
-    fetch()
+    fetch('http://localhost:2500/addKommentar', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel,
+            kommentarText
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?' + titel);
+            }
+        })
 }
 
 function fetchCallComments(titel, count) {
