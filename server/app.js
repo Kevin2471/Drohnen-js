@@ -126,10 +126,6 @@ app.post('/getNumberComments', async (req, res) => {
 //read Posts
 app.get('/getAllPosts', (req, res) => {
     const db = dbService.getDbServiceInstance();
-    const result = await db.getAllComments(themaTitel)
-    res.send({result});
-});
-
     const result = db.getAllPosts()
 
     result
