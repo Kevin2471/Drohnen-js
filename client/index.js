@@ -109,7 +109,7 @@ function themaErstellen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?regestriert');
+                table.innerHTML = '<p>Beitrag erfolgreich geteilt!</p>';
             }
         })
 }

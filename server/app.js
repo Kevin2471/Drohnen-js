@@ -20,8 +20,7 @@ app.post('/login', async (req, res) => {
         const data = await db.getUserByNuP(nutzername, passwort);
 
         if (data.length) {
-            storage.set('user', nutzername)
-            console.log(storage.getStorage('user'))
+            storage.set('user', nutzername);
             res.send({data});
         } else {
             res.send({error: 'Nutzername oder Passwort ist falsch!'});
@@ -35,14 +34,12 @@ app.post('/login', async (req, res) => {
 //get current user
 app.get('/getCurrentUser', (req, res) => {
     const result = storage.getStorage('user');
-    console.log(storage.getStorage('user'));
     res.send({result});
 });
 
 //delete current user
 app.get('/deleteCurrentUser', (req, res) => {
     storage.removeAll();
-    console.log(storage.getStorage('user'))
     res.send('Sie sind erfolgreich abgemeldet');
 });
 
@@ -66,7 +63,7 @@ app.post('/registerCheck', async (req, res) => {
 });
 
 app.post('/createThema', async (req, res) => {
-    const {themaTitel, themaText, nutzername} = req.body;
+    const {themaTitel, themaText} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -75,7 +72,7 @@ app.post('/createThema', async (req, res) => {
         if (data.length) {
             res.send({error: 'Der Titel ' + themaTitel + ' existiert bereits!'});
         } else {
-            data = await db.insertNewThema(themaTitel, themaText, nutzername);
+            data = await db.insertNewThema(themaTitel, themaText, storage.getStorage('user'));
             res.send({ data });
         }
     } catch (err) {
