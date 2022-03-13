@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.html?abmelden=">abmelden</a>
+        <a href="Anmelden.html?abmelden" onclick="abmelden()">abmelden</a>
     </li>
 </ul>
 
@@ -66,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         fetchCallComments(titel);
         fetchPost(titel);
         document.write(`<h2>Titel: ${titel}</h2>`);
+        function getTitel() {
+            kommentarHinzufuegen(titel);
+        }
     </script>
     <div class="Post"></div>
 <!--
@@ -132,15 +135,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ?>
     -->
     <div class="commentjs kommentar"></div>
-    <form method="post" class="kommentar">
-        <br>Kommentar hinzufügen:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
-        <div class="red">
+    <div class="kommentar">
+        <br>Kommentar hinzufügen:<br> <textarea rows="6" name="textarea" class="textarea" id="kommentarText"></textarea><br><br>
+        <div class="red" id="errorkh">
+            <!-- <?php echo $error; ?> -->
         </div>
         <div class="wrapper">
             <div class="box1"><a>zurück</a></div>
-            <div class="box2"><input type="submit" value="absenden" class="absenden"></div>
+            <div class="box2"><input type="submit" value="absenden" class="absenden" onclick="getTitel()"></div>
         </div>
-    </form>
+    </div>
 
 </div>
 </body>

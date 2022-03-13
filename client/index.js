@@ -114,6 +114,21 @@ function themaErstellen() {
         })
 }
 
+function kommentarHinzufuegen(titel) {
+    let table = document.getElementById('errorkh');
+    const themaTitel = titel;
+    const kommentarTextInput = document.querySelector('#kommentarText');
+    const kommentarText = kommentarTextInput.value;
+    kommentarTextInput.value = "";
+
+    if (kommentarText === "") {
+        table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
+        return;
+    }
+
+    fetch()
+}
+
 function fetchCallComments(titel, count) {
     fetch('http://localhost:2500/getAllComments')
         .then(response => response.json())
