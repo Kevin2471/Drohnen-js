@@ -46,7 +46,7 @@ function registrierenCheck() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?regestriert');
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?registriert');
             }
         })
 }
