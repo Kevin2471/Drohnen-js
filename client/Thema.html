@@ -63,14 +63,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="Textfeld">
     <script>
-        let titel= location.search;
-        titel = titel.substring(1, titel.length);
-        titel = titel.replaceAll('%20',' ');
-        fetchCallComments(titel);
-        fetchPost(titel);
-        document.write(`<h2>Titel: ${titel}</h2>`);
+        let themaTitel= location.search;
+        themaTitel = themaTitel.substring(1, themaTitel.length);
+        themaTitel = themaTitel.replaceAll('%20',' ');
+        fetchCallComments(themaTitel);
+        fetchPost(themaTitel);
+        document.write(`<h2>Titel: ${themaTitel}</h2>`);
         function getTitel() {
-            kommentarHinzufuegen(titel);
+            kommentarHinzufuegen(themaTitel);
         }
     </script>
     <div class="Post"></div>

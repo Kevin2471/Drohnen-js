@@ -108,14 +108,19 @@ app.get('/getAllUser', (req, res) => {
 });
 
 //read Comments
-app.get('/getAllComments', (req, res) => {
+app.post('/getAllComments', async (req, res) => {
+    const {themaTitel} = req.body;
     const db = dbService.getDbServiceInstance();
+    const result = await db.getAllComments(themaTitel)
+    res.send({result});
+});
 
-    const result = db.getAllComments()
-
-    result
-        .then(data => res.json({data: data}))
-        .catch(err => console.log(err));
+app.post('/getNumberComments', async (req, res) => {
+    const {themaTitel} = req.body;
+    const db = dbService.getDbServiceInstance();
+    let result = await db.getAllComments(themaTitel)
+    result = result.length;
+    res.send({result});
 });
 
 //read Posts

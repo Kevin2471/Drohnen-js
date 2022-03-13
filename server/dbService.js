@@ -37,12 +37,12 @@ class DbService {
         }
     }
 
-    async getAllComments() {
+    async getAllComments(themaTitel) {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Kommentare;";
+                const query = "SELECT * FROM Kommentare WHERE Titel = ?;";
 
-                connection.query(query, (err, res) => {
+                connection.query(query, [themaTitel], (err, res) => {
                     if (err) reject(new Error(err.message));
                     resolve(res);
                 })

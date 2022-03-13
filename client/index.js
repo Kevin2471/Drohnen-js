@@ -1,4 +1,3 @@
-let counter = 0;
 function checkLogIn() {
     fetch('http://localhost:2500/getCurrentUser')
         .then(response => response.json())
@@ -51,12 +50,13 @@ function registrierenCheck() {
             }
         })
 }
+
 function abmelden() {
     fetch('http://localhost:2500/deleteCurrentUser')
         .then();
 }
 
-function anmelden () {
+function anmelden() {
     let table = document.getElementById('erroranm');
     const nutzernameInput = document.querySelector('#nutzername');
     const nutzername = nutzernameInput.value;
@@ -81,14 +81,14 @@ function anmelden () {
     })
         .then(res => res.json())
         .then(res => {
-        console.log(res);
-        if (res.error) {
-            table.innerHTML = res.error;
-        } else {
-            window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
-            // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
-        }
-    });
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+                // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
+            }
+        });
 }
 
 function themaErstellen() {
@@ -126,9 +126,8 @@ function themaErstellen() {
         })
 }
 
-function kommentarHinzufuegen(titel) {
+function kommentarHinzufuegen() {
     let table = document.getElementById('errorkh');
-    const themaTitel = titel;
     const kommentarTextInput = document.querySelector('#kommentarText');
     const kommentarText = kommentarTextInput.value;
     kommentarTextInput.value = "";
@@ -159,23 +158,28 @@ function kommentarHinzufuegen(titel) {
         })
 }
 
-function fetchCallComments(titel, count) {
-    fetch('http://localhost:2500/getAllComments')
-        .then(response => response.json())
-        .then(data => loadComments(data['data'], titel, count));
+function fetchCallComments() {
+    fetch('http://localhost:2500/getAllComments', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel
+        })
+    })
+        .then(res => res.json())
+        .then(res => loadComments(res['result']));
 }
 
-function loadComments(data, titel, count) {
+function loadComments(data) {
     let numbers = 0;
     const table = document.querySelector('.commentjs');
-    console.log(data.length);
 
     let tableHtml = "";
 
-    data.forEach(function ({Titel, Kommentar, Benutzername, Zeitstempel}) {
-        if (Titel === titel) {
+    data.forEach(function ({Kommentar, Benutzername, Zeitstempel}) {
             numbers++;
-            counter += 1;
             tableHtml += ' <div class="themen">';
             tableHtml += '<div class="abstandlinksrechts">';
             tableHtml += '<div class="wrapper linieunten">';
@@ -185,29 +189,29 @@ function loadComments(data, titel, count) {
             tableHtml += `<p>${Kommentar}</p>`;
             tableHtml += '</div>';
             tableHtml += '</div>';
+
         }
-    });
+    )
+    ;
     if (numbers === 0) {
         numbers = 0;
         table.innerHTML = "<p>Keine Kommentare vorhanden.</p>";
         return;
     }
-    if (count !== true) {
-        table.innerHTML = tableHtml;
-    }
+    table.innerHTML = tableHtml;
 }
 
-function fetchPost(titel) {
+function fetchPost() {
     fetch('http://localhost:2500/getAllPosts')
         .then(response => response.json())
-        .then(data => loadPost(data['data'], titel));
+        .then(data => loadPost(data['data']));
 }
 
-function loadPost(data, titel) {
+function loadPost(data) {
     const table = document.querySelector('.Post');
     let tableHtml = "";
     data.forEach(function ({Titel, Text, Benutzername, Zeitstempel}) {
-        if (Titel === titel) {
+        if (Titel === themaTitel) {
             tableHtml += '<div class="themen">';
             tableHtml += '<div class="abstandlinksrechts">';
             tableHtml += '<div class="wrapper linieunten">';
@@ -246,7 +250,7 @@ function loadPosts(data, origin) {
         tableHtml += `</div>`
         tableHtml += `<div class="wrapper">`
         tableHtml += `<h3>Titel:</h3>`
-        tableHtml += `<p class="textrechts">Kommentare: ${counter}</p>`
+        tableHtml += `<p class="textrechts">Kommentare: </p>`
         tableHtml += `</div>`
         if (origin === false) {
             tableHtml
@@ -256,10 +260,25 @@ function loadPosts(data, origin) {
         tableHtml += `</h3>`
         tableHtml += `</div>`
         tableHtml += `</div>`
-        counter = 0;
     });
 
     table.innerHTML = tableHtml;
+}
+
+function getNumberOfComments(themaTitel) {
+    fetch('http://localhost:2500/getNumberComments', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel
+        })
+    })
+        .then(res => res.json())
+        .then(result => {
+            console.log(result)
+        })
 }
 
 function fetchOwnPosts() {
