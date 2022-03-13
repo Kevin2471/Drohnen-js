@@ -4,14 +4,17 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => loadPosts(data['data']));
 });
 
-function registrieren () {
+function registrierenCheck() {
     let table = document.getElementById('errorreg');
     const nutzernameInput = document.querySelector('#nutzername');
     const nutzername = nutzernameInput.value;
+    nutzernameInput.value = "";
     const passwortInput = document.querySelector('#passwort');
     const passwort = passwortInput.value;
+    passwortInput.value = "";
     const passwort2Input = document.querySelector('#passwort2');
     const passwort2 = passwort2Input.value;
+    passwort2Input.value = "";
 
     if (nutzername === "" || passwort === "" || passwort2 === "") {
         table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
@@ -19,32 +22,62 @@ function registrieren () {
     } else if (passwort !== passwort2) {
         table.innerHTML = `<p>Die Passwörter sind nicht gleich!</p>`;
         return;
-    } else {
-        table.innerhtml = `<p>du wirst registriert, bitte hab geduld!</p>`;
     }
 
-    fetch('http://localhost:2500/insert', {
+    fetch('http://localhost:2500/registerCheck', {
         headers: {
             'Content-Type': 'application/json'
         },
         method: 'POST',
-        body: JSON.stringify({nutzername: nutzername})
+        body: JSON.stringify({
+            nutzername
+        })
     })
-        .then(response => response.json())
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                registrieren(nutzername, passwort, table);
+            }
+        })
 }
 
-function anmelden() {
+function registrieren(nutzername, passwort, table) {
+    fetch ('http://localhost:2500/register', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            nutzername,
+            passwort
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html');
+               // let table = document.getElementById('erroranm');
+               // table.innerHTML = '<p>Sie sind erfolgreich registriert!</p>';
+            }
+        })
+}
+
+function anmelden () {
     let table = document.getElementById('erroranm');
-    console.log('test')
     const nutzernameInput = document.querySelector('#nutzername');
     const nutzername = nutzernameInput.value;
+    nutzernameInput.value = "";
     const passwortInput = document.querySelector('#passwort');
     const passwort = passwortInput.value;
+    passwortInput.value = "";
     if (nutzername === "" || passwort === "") {
         table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
         return;
-    } else {
-        table.innerHTML = `<p>du wirst angemeldet, bitte hab geduld!</p>`;
     }
 
     fetch('http://localhost:2500/login', {
@@ -54,15 +87,17 @@ function anmelden() {
         },
         body: JSON.stringify({
             nutzername,
-            passwort,
+            passwort
         })
-    }).then(res => res.json())
+    })
+        .then(res => res.json())
         .then(res => {
         console.log(res);
         if (res.error) {
             table.innerHTML = res.error;
         } else {
-            table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
+            window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+            // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
         }
     });
 

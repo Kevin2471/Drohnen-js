@@ -15,28 +15,52 @@ app.post('/login', async (req, res) => {
     const db = dbService.getDbServiceInstance();
 
     try {
-        const data = await db.getUser(nutzername, passwort);
+        const data = await db.getUserByNuP(nutzername, passwort);
 
         if (data.length) {
             res.send({ data });
         } else {
-            res.send({ error: 'Der Benutzer existiert nicht.' })
+            res.send({ error: 'Nutzername oder Passwort ist falsch!' });
         }
 
-    } catch (e) {
-        res.send(e);
+    } catch (err) {
+        res.send(err);
     }
 });
-//create
-app.post('/insert', (req, res) => {
+
+//register
+app.post('/registerCheck', async (req, res) => {
     const { nutzername } = req.body;
     const db = dbService.getDbServiceInstance();
 
-    const result = db.insertNewName(nutzername);
-    result
-        .then(data => res.json({success: true}))
-        .catch(err => console.log(err));
+    try {
+        const data = await db.getUserByN(nutzername);
+
+        if (data.length) {
+            res.send({ error: 'Der Nutzername ' + nutzername + ' existiert bereits!' });
+        } /* else {
+            res.send({ data });
+            //await db.insertNewUser(nutzername, passwort);
+        } */
+    } catch (err) {
+        res.send(err);
+    }
 });
+
+app.post('/register', async (req, res) => {
+    const { nutzername, passwort } = req.body;
+    const db = dbService.getDbServiceInstance();
+
+    try {
+        const data = await db.insertNewUser(nutzername, passwort);
+
+        if (data.length) {
+            res.send({ data });
+        }
+    } catch (err) {
+        res.send(err);
+    }
+})
 
 //read User
 app.get('/getAllUser', (req, res) => {
@@ -79,4 +103,4 @@ app.get('/getAllPosts', (req, res) => {
 
 //delete
 
-app.listen(process.env.PORT, () => console.log('app is running on port ' + process.env.PORT));
+app.listen(process.env.PORT, () => console.log('app is running'));

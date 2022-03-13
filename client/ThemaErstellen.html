@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>Neues Thema</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
+    <script src="index.js"></script>
 </head>
 <body>
-
+<!--
 <?php
 session_start();
 if ($_SESSION['Benutzername'] === null) {
@@ -41,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $con->close();
     }
 }
-?>
+?> -->
 
 <div class="header">
     <h1 class="Überschrift center">
@@ -51,32 +52,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <ul>
     <li>
-        <a href="Hauptseite.php">alle Themen</a>
+        <a href="Hauptseite.html">alle Themen</a>
     </li>
     <li>
-        <a href="EigeneThemen.php">eigene Themen</a>
+        <a href="EigeneThemen.html">eigene Themen</a>
     </li>
     <li>
-        <a class="aktiv" href="ThemaErstellen.php">neues Thema erstellen</a>
+        <a class="aktiv" href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.php?abmelden=">abmelden</a>
+        <a href="Anmelden.html?abmelden=">abmelden</a>
     </li>
 </ul>
 
 <div class="Textfeld">
     <h3>Neues Thema:</h3>
-    <form method="post" action="ThemaErstellen.php">
-        Titel:<br> <input type="text" name="titel" class="textarea"><br><br>
-        Text:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
-        <div class="red">
-            <?php echo $error; ?>
-        </div>
-        <div class="wrapper">
-            <div><a href="Hauptseite.php">abbrechen</a></div>
-            <div><input type="submit" value="absenden" class="absenden"></div>
-        </div>
-    </form>
+    Titel:<br> <input type="text" name="titel" class="textarea"><br><br>
+    Text:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
+    <div class="red">
+        <?php echo $error; ?>
+    </div>
+    <div class="wrapper">
+        <div><a href="Hauptseite.html">abbrechen</a></div>
+        <div><input type="submit" value="absenden" class="absenden"></div>
+    </div>
 
 </div>
 </body>
