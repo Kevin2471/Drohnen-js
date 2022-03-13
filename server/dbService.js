@@ -32,7 +32,6 @@ class DbService {
                     resolve(res);
                 })
             });
-            console.log('User sind geladen');
             return response;
         } catch (error) {
             console.log(error);
@@ -49,7 +48,6 @@ class DbService {
                     resolve(res);
                 })
             });
-            console.log('Kommentare sind geladen');
             return response;
         } catch (error) {
             console.log(error);
@@ -66,7 +64,6 @@ class DbService {
                     resolve(res);
                 })
             });
-            console.log('Posts sind geladen');
             return response;
         } catch (error) {
             console.log(error);

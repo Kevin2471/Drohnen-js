@@ -5,11 +5,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const dbService = require('./dbService');
+const storage = require('./storage');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+//login
 app.post('/login', async (req, res) => {
     const {nutzername, passwort} = req.body;
     const db = dbService.getDbServiceInstance();
@@ -18,6 +20,8 @@ app.post('/login', async (req, res) => {
         const data = await db.getUserByNuP(nutzername, passwort);
 
         if (data.length) {
+            storage.set('user', nutzername)
+            console.log(storage.getStorage('user'))
             res.send({data});
         } else {
             res.send({error: 'Nutzername oder Passwort ist falsch!'});
@@ -26,6 +30,20 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         res.send(err);
     }
+});
+
+//get current user
+app.get('/getCurrentUser', (req, res) => {
+    const result = storage.getStorage('user');
+    console.log(storage.getStorage('user'));
+    res.send({result});
+});
+
+//delete current user
+app.get('/deleteCurrentUser', (req, res) => {
+    storage.removeAll();
+    console.log(storage.getStorage('user'))
+    res.send('Sie sind erfolgreich abgemeldet');
 });
 
 //register
@@ -57,7 +75,6 @@ app.get('/getAllUser', (req, res) => {
     result
         .then(data => res.json({data: data}))
         .catch(err => console.log(err));
-    console.log('daten sind bereit')
 });
 
 //read Comments
@@ -69,7 +86,6 @@ app.get('/getAllComments', (req, res) => {
     result
         .then(data => res.json({data: data}))
         .catch(err => console.log(err));
-    console.log('daten sind bereit')
 });
 
 //read Posts
@@ -81,7 +97,6 @@ app.get('/getAllPosts', (req, res) => {
     result
         .then(data => res.json({data: data}))
         .catch(err => console.log(err));
-    console.log('daten sind bereit')
 });
 
 //update

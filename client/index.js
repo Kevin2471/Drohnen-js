@@ -1,9 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
-    fetch('http://localhost:2500/getAllPosts')
-        .then(response => response.json())
-        .then(data => loadPosts(data['data']));
-});
-
+let counter = 0;
 function registrierenCheck() {
     let table = document.getElementById('errorreg');
     const nutzernameInput = document.querySelector('#nutzername');
@@ -44,6 +39,10 @@ function registrierenCheck() {
             }
         })
 }
+function abmelden() {
+    fetch('http://localhost:2500/deleteCurrentUser')
+        .then();
+}
 
 function anmelden () {
     let table = document.getElementById('erroranm');
@@ -75,55 +74,28 @@ function anmelden () {
             table.innerHTML = res.error;
         } else {
             window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
-            storage.set('user', nutzername)
             // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
         }
     });
-
-    // fetch('http://localhost:2500/getAllUser')
-    //     .then(response => response.json())
-    //     .then(data => loadUser(data['data'], nutzername, passwort, table));
 }
 
-function loadUser(data, nutzername, passwort, table) {
-    if (data.length === 0) {
-        table.innerHTML = `<p>Bitte überprüfen Sie den Nutzernamen und das Passwort!</p>`;
-        return;
-    }
-
-    let found = false;
-    data.forEach(function ({Benutzername, Passwort}) {
-        if (nutzername === Benutzername && passwort === Passwort) {
-            found = true;
-        }
-    });
-    if (found === true) {
-        window.alert("Yes Sir");
-        table.innerHTML = `<p>Erfolgreich anmgemeldet!</p>`;
-    } else {
-        window.alert("No Sir");
-        table.innerHTML = `<p>Bitte überprüfen Sie den Nutzernamen und das Passwort!</p>`;
-    }
-}
-
-function fetchCallComments(titel) {
-    console.log('läuft');
+function fetchCallComments(titel, count) {
     fetch('http://localhost:2500/getAllComments')
         .then(response => response.json())
-        .then(data => loadComments(data['data'], titel));
+        .then(data => loadComments(data['data'], titel, count));
 }
 
-function loadComments(data, titel) {
+function loadComments(data, titel, count) {
     const table = document.querySelector('.commentjs');
     if (data.length === 0) {
         table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>";
         return;
     }
-
     let tableHtml = "";
 
     data.forEach(function ({Titel, Kommentar, Benutzername, Zeitstempel}) {
         if (Titel === titel) {
+            counter += 1;
             tableHtml += ' <div class="themen">';
             tableHtml += '<div class="abstandlinksrechts">';
             tableHtml += '<div class="wrapper linieunten">';
@@ -135,8 +107,9 @@ function loadComments(data, titel) {
             tableHtml += '</div>';
         }
     });
-
-    table.innerHTML = tableHtml;
+    if (count !== true) {
+        table.innerHTML = tableHtml;
+    }
 }
 
 function fetchPost(titel) {
@@ -164,6 +137,12 @@ function loadPost(data, titel) {
     table.innerHTML = tableHtml;
 }
 
+function fetchAllPosts() {
+    fetch('http://localhost:2500/getAllPosts')
+        .then(response => response.json())
+        .then(data => loadPosts(data['data']));
+}
+
 function loadPosts(data) {
     const table = document.querySelector('.Posts');
 
@@ -174,6 +153,7 @@ function loadPosts(data) {
 
     let tableHtml = "";
     data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
+        fetchCallComments(Titel, true)
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
         tableHtml += `<div class='wrapper'>`
@@ -182,13 +162,54 @@ function loadPosts(data) {
         tableHtml += `</div>`
         tableHtml += `<div class="wrapper">`
         tableHtml += `<h3>Titel:</h3>`
-        tableHtml += `<p class="textrechts">Kommentare: --</p>`
+        tableHtml += `<p class="textrechts">Kommentare: ${counter}</p>`
         tableHtml += `</div>`
         tableHtml += `<h3>`
-        tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>` /* TODO link anpassen */
+        tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
         tableHtml += `</h3>`
         tableHtml += `</div>`
         tableHtml += `</div>`
+        counter = 0;
+    });
+
+    table.innerHTML = tableHtml;
+}
+
+function fetchOwnPosts() {
+    fetch('http://localhost:2500/getAllPosts')
+        .then(response => response.json())
+        .then(data => loadOwnPosts(data['data']));
+}
+
+function loadOwnPosts(data) {
+    const table = document.querySelector('.OwnPosts');
+
+    if (data.length === 0) {
+        table.innerHTML = `<p>Keine Beiträge vorhanden!</p>`;
+        return;
+    }
+
+    let tableHtml = "";
+    data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
+        if(true) {
+            fetchCallComments(Titel, true)
+            tableHtml += `<div class='themen'>`
+            tableHtml += `<div class='abstandlinksrechts'>`
+            tableHtml += `<div class='wrapper'>`
+            tableHtml += `<p> Beitrag von: ${Benutzername} </p>`
+            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`
+            tableHtml += `</div>`
+            tableHtml += `<div class="wrapper">`
+            tableHtml += `<h3>Titel:</h3>`
+            tableHtml += `<p class="textrechts">Kommentare: ${counter}</p>`
+            tableHtml += `</div>`
+            tableHtml += `<h3>`
+            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
+            tableHtml += `</h3>`
+            tableHtml += `</div>`
+            tableHtml += `</div>`
+            counter = 0;
+        }
     });
 
     table.innerHTML = tableHtml;

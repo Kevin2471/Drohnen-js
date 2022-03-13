@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>eigene Themen</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
+    <script src="index.js"></script>
 </head>
 <body>
 <div class="header">
@@ -26,7 +27,8 @@
     </li>
 </ul>
 
-<div class="Textfeld">
+<div class="Textfeld OwnPost">
+    <script>fetchOwnPosts()</script>
     <!--
     <?php
     if (isset($_GET["gelöscht"])) {
