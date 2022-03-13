@@ -225,10 +225,10 @@ function loadPost(data, titel) {
 function fetchAllPosts() {
     fetch('http://localhost:2500/getAllPosts')
         .then(response => response.json())
-        .then(data => loadPosts(data['data']));
+        .then(data => loadPosts(data['data'], true));
 }
 
-function loadPosts(data) {
+function loadPosts(data, origin) {
     const table = document.querySelector('.Posts');
 
     if (data.length === 0) {
@@ -248,6 +248,9 @@ function loadPosts(data) {
         tableHtml += `<h3>Titel:</h3>`
         tableHtml += `<p class="textrechts">Kommentare: ${counter}</p>`
         tableHtml += `</div>`
+        if (origin === false) {
+            tableHtml
+        }
         tableHtml += `<h3>`
         tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
         tableHtml += `</h3>`
@@ -262,5 +265,5 @@ function loadPosts(data) {
 function fetchOwnPosts() {
     fetch('http://localhost:2500/getOwnPosts')
         .then(response => response.json())
-        .then(data => loadPosts(data['data']));
+        .then(data => loadPosts(data['data'], false));
 }
