@@ -26,12 +26,18 @@
         <a href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.html?abmelden=" >abmelden</a>
+        <a href="Anmelden.html?abmelden" onclick="abmelden()">abmelden</a>
     </li>
 </ul>
 
 <div class="Textfeld Posts">
-    <script>fetchOwnPosts()</script>
+    <script>
+        if (location.search === '?gelöscht') {
+            document.write('<p class="red">Beitrag wurde gelöscht!</p>');
+        }
+
+        fetchOwnPosts()
+    </script>
     <!--
     <?php
     if (isset($_GET["gelöscht"])) {

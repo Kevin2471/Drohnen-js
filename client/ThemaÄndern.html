@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Neues Thema</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
+    <script src="index.js"></script>
 </head>
 <body>
 <!--
@@ -45,39 +46,45 @@ $con->close();
 
 <ul>
     <li>
-        <a href="Hauptseite.php">alle Themen</a>
+        <a href="Hauptseite.html">alle Themen</a>
     </li>
     <li>
-        <a href="EigeneThemen.php">eigene Themen</a>
+        <a href="EigeneThemen.html">eigene Themen</a>
     </li>
     <li>
-        <a href="ThemaErstellen.php">neues Thema erstellen</a>
+        <a href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Anmelden.php">abmelden</a>
+        <a href="Anmelden.html?abmelden" onclick="abmelden()">abmelden</a>
     </li>
 </ul>
 
 <div class="Textfeld">
+    <script>
+        let themaTitel= location.search;
+        themaTitel = themaTitel.substring(1, themaTitel.length);
+        themaTitel = themaTitel.replaceAll('%20',' ');
+        fetchCallComments(themaTitel);
+        fetchPost(themaTitel);
+        document.write(`<h2>Titel: ${themaTitel}</h2>`);
+    </script>
     <h3>Thema bearbeiten:</h3>
-    <form method="post" action="ThemaÄndern.php?thema=<?php echo $_GET['thema'].'&value=0' ?>">
-        <!--
-        <?php
-            echo "<h3>Titel: $_GET[thema]</h3>";
-        ?>
-        -->
-        Text:<br> <textarea rows="6" name="textarea" class="textarea"></textarea><br><br>
-        <div class="red">
-            <?php echo $error; ?>
-        </div>
-        <div class="wrapper">
-            <div><a href="EigeneThemen.php">abbrechen</a></div>
-            <div><input type="submit" value="absenden" class="absenden"></div>
-        </div>
-    </form>
+    <!--
+    <?php
+        echo "<h3>Titel: $_GET[thema]</h3>";
+    ?>
+    -->
+    Text:<br> <textarea rows="6" name="textarea" class="textarea" id="textÄndern"></textarea><br><br>
+    <div class="red" id="errortb">
+        <!-- <?php echo $error; ?> -->
+    </div>
+    <div class="wrapper">
+        <div><a href="EigeneThemen.html">abbrechen</a></div>
+        <div><input type="submit" value="absenden" class="absenden" onclick="themaBearbeiten()"></div>
+    </div>
     <br>
     <div class="textrechts">
-        <a>Beitrag löschen</a>
+        <a onclick="beitragLoeschen()">Beitrag löschen</a>
     </div>
 
 </div>

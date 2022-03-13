@@ -126,6 +126,9 @@ app.post('/getNumberComments', async (req, res) => {
 //read Posts
 app.get('/getAllPosts', (req, res) => {
     const db = dbService.getDbServiceInstance();
+    const result = await db.getAllComments(themaTitel)
+    res.send({result});
+});
 
     const result = db.getAllPosts()
 
@@ -146,7 +149,7 @@ app.get('/getOwnPosts', (req, res) => {
 });
 
 //update
-app.get('/update', async (req, res) => {
+app.post('/update', async (req, res) => {
     const {themaTitel, themaText} = req.body;
     const db = dbService.getDbServiceInstance();
     try {
@@ -157,7 +160,7 @@ app.get('/update', async (req, res) => {
     }
 });
 //delete
-app.get('/delete', async (req, res) => {
+app.post('/delete', async (req, res) => {
     const {themaTitel} = req.body;
     const db = dbService.getDbServiceInstance();
     try {

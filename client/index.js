@@ -12,13 +12,13 @@ function checkUser(data) {
 
 function registrierenCheck() {
     let table = document.getElementById('errorreg');
-    const nutzernameInput = document.querySelector('#nutzername');
+    const nutzernameInput = document.getElementById('nutzername');
     const nutzername = nutzernameInput.value;
     nutzernameInput.value = "";
-    const passwortInput = document.querySelector('#passwort');
+    const passwortInput = document.getElementById('passwort');
     const passwort = passwortInput.value;
     passwortInput.value = "";
-    const passwort2Input = document.querySelector('#passwort2');
+    const passwort2Input = document.getElementById('passwort2');
     const passwort2 = passwort2Input.value;
     passwort2Input.value = "";
 
@@ -58,10 +58,10 @@ function abmelden() {
 
 function anmelden() {
     let table = document.getElementById('erroranm');
-    const nutzernameInput = document.querySelector('#nutzername');
+    const nutzernameInput = document.getElementById('nutzername');
     const nutzername = nutzernameInput.value;
     nutzernameInput.value = "";
-    const passwortInput = document.querySelector('#passwort');
+    const passwortInput = document.getElementById('passwort');
     const passwort = passwortInput.value;
     passwortInput.value = "";
     if (nutzername === "" || passwort === "") {
@@ -81,22 +81,21 @@ function anmelden() {
     })
         .then(res => res.json())
         .then(res => {
-            console.log(res);
-            if (res.error) {
-                table.innerHTML = res.error;
-            } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
-                // table.innerHTML = 'Der Benutzer existiert und hat die id: ' + res.data[0].id;
-            }
-        });
+        console.log(res);
+        if (res.error) {
+            table.innerHTML = res.error;
+        } else {
+            window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+        }
+    });
 }
 
 function themaErstellen() {
     let table = document.getElementById('errorte');
-    const themaTitelInput = document.querySelector('#themaTitel');
+    const themaTitelInput = document.getElementById('themaTitel');
     const themaTitel = themaTitelInput.value;
     themaTitelInput.value = "";
-    const themaTextInput = document.querySelector('#themaText');
+    const themaTextInput = document.getElementById('themaText');
     const themaText = themaTextInput.value;
     themaTextInput.value = "";
 
@@ -128,7 +127,7 @@ function themaErstellen() {
 
 function kommentarHinzufuegen() {
     let table = document.getElementById('errorkh');
-    const kommentarTextInput = document.querySelector('#kommentarText');
+    const kommentarTextInput = document.getElementById('kommentarText');
     const kommentarText = kommentarTextInput.value;
     kommentarTextInput.value = "";
 
@@ -153,7 +152,59 @@ function kommentarHinzufuegen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?' + titel);
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?' + themaTitel);
+            }
+        })
+}
+
+function themaBearbeiten() {
+    const table = document.getElementById('errortb');
+    const themaTextInput = document.getElementById('textÄndern');
+    const themaText = themaTextInput.value;
+    themaTextInput.value = "";
+
+    if (themaText === "") {
+        table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
+        return;
+    }
+
+    fetch('http://localhost:2500/update', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel,
+            themaText
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            console.log(res);
+            if (res.error) {
+                table.innerHTML = res.error;
+            } else {
+                table.innerHTML = `<p>Beitrag erfolgreich geändert!</p>`;
+            }
+        })
+}
+
+function beitragLoeschen() {
+    fetch('http://localhost:2500/delete', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            themaTitel
+        })
+    })
+        .then(res => res.json())
+        .then(res => {
+            if (res.error) {
+                console.log(res.error);
+            } else {
+                window.location.replace('http://localhost:63342/Drohnen-js/client/EigeneThemen.html?geloescht');
             }
         })
 }
@@ -253,11 +304,17 @@ function loadPosts(data, origin) {
         tableHtml += `<p class="textrechts">Kommentare: </p>`
         tableHtml += `</div>`
         if (origin === false) {
-            tableHtml
+            tableHtml += `<div class="wrapper">`
+            tableHtml += `<h3>`
+            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
+            tableHtml += `</h3>`
+            tableHtml += `<a href="ThemaÄndern.html?${Titel}">Bearbeiten</a>`
+            tableHtml += `</div>`
+        } else {
+            tableHtml += `<h3>`
+            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
+            tableHtml += `</h3>`
         }
-        tableHtml += `<h3>`
-        tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
-        tableHtml += `</h3>`
         tableHtml += `</div>`
         tableHtml += `</div>`
     });
