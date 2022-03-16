@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>eigene Themen</title>
+    <title>Impressum/Datenschutz</title>
     <link rel="stylesheet" type="text/css" href="Style.css">
     <script src="index.js"></script>
 </head>
@@ -13,7 +13,7 @@
 
 <div class="header">
     <h1 class="Überschrift center">
-        Drohnenforum
+      Drohnenforum
     </h1>
 </div>
 
@@ -22,13 +22,13 @@
         <a href="Hauptseite.html">alle Themen</a>
     </li>
     <li>
-        <a class="aktiv" href="EigeneThemen.html">eigene Themen</a>
+        <a href="EigeneThemen.html">eigene Themen</a>
     </li>
     <li>
         <a href="ThemaErstellen.html">neues Thema erstellen</a>
     </li>
     <li>
-        <a href="Impressum.html">Impressum/Datenschutz</a>
+        <a class="aktiv" href="Impressum.html">Impressum/Datenschutz</a>
     </li>
     <li>
         <a href="Anmelden.html?abmelden" onclick="abmelden()">abmelden</a>
@@ -36,13 +36,7 @@
 </ul>
 
 <div class="Textfeld">
-    <script>
-        if (location.search === '?geloescht') {
-            document.write('<p class="red">Beitrag wurde gelöscht!</p>');
-        }
-        fetchOwnPosts();
-    </script>
-    <div class="Posts"></div>
+
 </div>
 
 </body>
