@@ -222,7 +222,7 @@ function fetchCallComments() {
 
 function loadComments(data) {
     let numbers = 0;
-    const table = document.querySelector('.commentjs');
+    let table = document.querySelector('.commentjs');
 
     let tableHtml = "";
 
@@ -244,6 +244,12 @@ function loadComments(data) {
         return;
     }
     table.innerHTML = tableHtml;
+    table = document.querySelector('.return');
+    if(goto === "true") {
+        table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/EigeneThemen.html" >zurück</a>'
+    } else {
+        table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/Hauptseite.html" >zurück</a>'
+    }
 }
 
 function fetchPost() {
@@ -278,13 +284,12 @@ function fetchAllPosts() {
 }
 
 function loadPosts(data, origin) {
-    const table = document.querySelector('.Posts');
+    let table = document.querySelector('.Posts');
 
     if (data.length === 0) {
         table.innerHTML = `<p>Keine Beiträge vorhanden!</p>`;
         return;
     }
-
     let tableHtml = "";
     data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
         tableHtml += `<div class='themen'>`
@@ -300,24 +305,23 @@ function loadPosts(data, origin) {
         if (origin === false) {
             tableHtml += `<div class="wrapper">`
             tableHtml += `<h3>`
-            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
+            tableHtml += `<a class="black unterstrichen" href="Thema.html?titel=${Titel}&return=true">${Titel}</a>`
             tableHtml += `</h3>`
             tableHtml += `<a href="ThemaÄndern.html?${Titel}">Bearbeiten</a>`
             tableHtml += `</div>`
         } else {
             tableHtml += `<h3>`
-            tableHtml += `<a class="black unterstrichen" href="Thema.html?${Titel}">${Titel}</a>`
+            tableHtml += `<a class="black unterstrichen" href="Thema.html?titel=${Titel}&return=false">${Titel}</a>`
             tableHtml += `</h3>`
         }
         tableHtml += `</div>`
         tableHtml += `</div>`
     });
-
     table.innerHTML = tableHtml;
 }
 
 function getNumberOfComments(themaTitel) {
-    fetch('http://localhost:2500/getNumberComments', {
+    return fetch('http://localhost:2500/getNumberComments', {
         headers: {
             'Content-Type': 'application/json'
         },
@@ -328,7 +332,7 @@ function getNumberOfComments(themaTitel) {
     })
         .then(res => res.json())
         .then(result => {
-            console.log(result)
+            return result;
         })
 }
 

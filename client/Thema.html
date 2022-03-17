@@ -39,13 +39,16 @@
 <div class="Textfeld">
 
     <script>
-        let themaTitel = location.search;
-        themaTitel = themaTitel.substring(1, themaTitel.length);
+        let url = window.location;
+        url = new URL(url);
+        let themaTitel = url.searchParams.get("titel");
+        let goto = url.searchParams.get('return');
         themaTitel = themaTitel.replaceAll('%20', ' ');
+
         fetchCallComments();
         fetchPost();
-        document.write(`<h2>Titel: ${themaTitel}</h2>`);
 
+        document.write(`<h2>Titel: ${themaTitel}</h2>`);
     </script>
 
     <div class="Post"></div>
@@ -58,7 +61,7 @@
         <br>Kommentar hinzufügen:<br> <textarea rows="6" name="textarea" class="textarea" id="kommentarText"></textarea><br><br>
         <div class="red" id="errorkh"></div>
         <div class="wrapper">
-            <div class="box1"><a>zurück</a></div>
+            <div class="box1 return"></div>
             <div class="box2"><input type="submit" value="absenden" class="absenden" onclick="kommentarHinzufuegen()">
             </div>
         </div>
