@@ -316,11 +316,12 @@ function loadPosts(data, origin) {
     }
     let tableHtml = "";
     data.forEach(function ({Titel, Benutzername, Zeitstempel, AnzahlKommentare}) {
+        const time = formatTime(Zeitstempel);
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
         tableHtml += `<div class='wrapper'>`
         tableHtml += `<p> Beitrag von: ${Benutzername} </p>`
-        tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`
+        tableHtml += `<p>Datum und Uhrzeit: ${time}</p>`
         tableHtml += `</div>`
         tableHtml += `<div class="wrapper">`
         tableHtml += `<h3>Titel:</h3>`
@@ -342,6 +343,20 @@ function loadPosts(data, origin) {
         tableHtml += `</div>`
     });
     table.innerHTML = tableHtml;
+}
+
+function formatTime(time) {
+    let date = new Date(time);
+    let list = date.toString().split(' ');
+    let result = "";
+    result += list[2];
+    result += '.';
+    result += list[1];
+    result += '.';
+    result += list[3];
+    result += ' - ';
+    result += list[4];
+    return result;
 }
 
 function fetchOwnPosts() {
