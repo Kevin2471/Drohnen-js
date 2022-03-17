@@ -41,13 +41,10 @@
         let themaTitel = location.search;
         themaTitel = themaTitel.substring(1, themaTitel.length);
         themaTitel = themaTitel.replaceAll('%20', ' ');
-        fetchCallComments(themaTitel);
-        fetchPost(themaTitel);
+        fetchCallComments();
+        fetchPost();
         document.write(`<h2>Titel: ${themaTitel}</h2>`);
 
-        function getTitel() {
-            kommentarHinzufuegen(themaTitel);
-        }
     </script>
 
     <div class="Post"></div>
