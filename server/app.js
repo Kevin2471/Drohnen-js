@@ -20,7 +20,7 @@ app.post('/login', async (req, res) => {
         const data = await db.getUserByNuP(nutzername, passwort);
 
         if (data.length) {
-            storage.set('user', nutzername);
+            storage.set(nutzername);
             res.send({data});
         } else {
             res.send({error: 'Nutzername oder Passwort ist falsch!'});
@@ -31,17 +31,16 @@ app.post('/login', async (req, res) => {
     }
 });
 
-//get current user
-app.get('/getCurrentUser', (req, res) => {
-    const result = storage.getStorage('user');
-    if (result === undefined) {
-        res.send(true);
-    } else res.send(false);
+//check user
+app.post('/checkCurrentUser', (req, res) => {
+    const {user} = req.body;
+    res.send(storage.checkUser(user))
 });
 
-//delete current user
-app.get('/deleteCurrentUser', (req, res) => {
-    storage.removeAll();
+//delete user
+app.post('/deleteCurrentUser', (req, res) => {
+    const {user} = req.body;
+    storage.remove(user);
     res.send('Sie sind erfolgreich abgemeldet');
 });
 
@@ -66,7 +65,7 @@ app.post('/registerCheck', async (req, res) => {
 
 //create Thema
 app.post('/createThema', async (req, res) => {
-    const {themaTitel, themaText} = req.body;
+    const {themaTitel, themaText, user} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
@@ -75,7 +74,7 @@ app.post('/createThema', async (req, res) => {
         if (data.length) {
             res.send({error: 'Der Titel ' + themaTitel + ' existiert bereits!'});
         } else {
-            data = await db.insertNewThema(themaTitel, themaText, storage.getStorage('user'));
+            data = await db.insertNewThema(themaTitel, themaText, user);
             res.send({data});
         }
     } catch (err) {
@@ -85,11 +84,11 @@ app.post('/createThema', async (req, res) => {
 
 //add Kommentar
 app.post('/addKommentar', async (req, res) => {
-    const {themaTitel, kommentarText} = req.body;
+    const {themaTitel, kommentarText, user} = req.body;
     const db = dbService.getDbServiceInstance();
 
     try {
-        const data = await db.addKommentar(themaTitel, kommentarText, storage.getStorage('user'));
+        const data = await db.addKommentar(themaTitel, kommentarText, user);
         res.send({data});
     } catch (err) {
         res.send(err);
@@ -126,11 +125,10 @@ app.get('/getAllPosts', (req, res) => {
 });
 
 //read own Posts
-app.get('/getOwnPosts', (req, res) => {
+app.post('/getOwnPosts', (req, res) => {
+    const {user} = req.body;
     const db = dbService.getDbServiceInstance();
-
-    const result = db.getOwnPosts(storage.getStorage('user'))
-
+    const result = db.getOwnPosts(user)
     result
         .then(data => res.json({data: data}))
         .catch(err => console.log(err));

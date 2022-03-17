@@ -1,28 +1,31 @@
 const storage = new function () {
 
-    let dataContainer = {};
+        let dataContainer = [];
 
-    this.set = function (name, value) {
-        dataContainer[name] = value;
-    };
+        this.set = function (value) {
+            dataContainer.unshift(value);
+            console.log(dataContainer);
+        };
 
-    this.getStorage = function (name) {
-        return dataContainer[name];
-    };
+        this.checkUser = function (name) {
+            return dataContainer.includes(name);
+        };
 
-    this.getAll = function () {
-        return dataContainer;
-    };
+        this.getAll = function () {
+            return dataContainer;
+        };
 
-    this.remove = function (name) {
-        if (typeof (dataContainer[name]) !== undefined) {
-            delete dataContainer[name];
-        }
-    };
+        this.remove = function (name) {
+            const pos = dataContainer.indexOf(name);
+            dataContainer.splice(pos);
+            console.log(dataContainer);
 
-    this.removeAll = function () {
-        dataContainer = {};
-    };
-};
+        };
+
+        this.removeAll = function () {
+            dataContainer = {};
+        };
+    }
+;
 
 module.exports = storage;

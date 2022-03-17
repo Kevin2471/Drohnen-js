@@ -1,11 +1,20 @@
 function checkLogIn() {
-    fetch('http://localhost:2500/getCurrentUser')
+    const user = sessionStorage.getItem('user');
+    fetch('http://localhost:2500/checkCurrentUser', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            user,
+        })
+    })
         .then(response => response.json())
         .then(response => checkUser(response))
 }
 
 function checkUser(data) {
-    if (data === true) {
+    if (data === false) {
         window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html');
     }
 }
@@ -52,8 +61,17 @@ function registrierenCheck() {
 }
 
 function abmelden() {
-    fetch('http://localhost:2500/deleteCurrentUser')
-        .then();
+    const user = sessionStorage.getItem('user');
+    fetch('http://localhost:2500/deleteCurrentUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user,
+        })
+    })
+        .then(res => res.json());
 }
 
 function anmelden() {
@@ -85,6 +103,7 @@ function anmelden() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
+                sessionStorage.setItem('user', nutzername);
                 window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
             }
         });
@@ -98,6 +117,7 @@ function themaErstellen() {
     const themaTextInput = document.getElementById('themaText');
     const themaText = themaTextInput.value;
     themaTextInput.value = "";
+    const user = sessionStorage.getItem('user');
 
     if (themaTitel === "" || themaText === "") {
         table.innerHTML = `<p>Bitte füllen Sie alle Felder aus!</p>`;
@@ -111,7 +131,8 @@ function themaErstellen() {
         method: 'POST',
         body: JSON.stringify({
             themaTitel,
-            themaText
+            themaText,
+            user
         })
     })
         .then(res => res.json())
@@ -135,6 +156,8 @@ function kommentarHinzufuegen() {
         return;
     }
 
+    const user = sessionStorage.getItem('user');
+
     fetch('http://localhost:2500/addKommentar', {
         headers: {
             'Content-Type': 'application/json'
@@ -142,7 +165,8 @@ function kommentarHinzufuegen() {
         method: 'POST',
         body: JSON.stringify({
             themaTitel,
-            kommentarText
+            kommentarText,
+            user
         })
     })
         .then(res => res.json())
@@ -151,7 +175,7 @@ function kommentarHinzufuegen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel+ '&return=' + goto);
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel + '&return=' + goto);
             }
         })
 }
@@ -245,7 +269,7 @@ function loadComments(data) {
     }
     table.innerHTML = tableHtml;
     table = document.querySelector('.return');
-    if(goto === "true") {
+    if (goto === "true") {
         table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/EigeneThemen.html" >zurück</a>'
     } else {
         table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/Hauptseite.html" >zurück</a>'
@@ -321,7 +345,16 @@ function loadPosts(data, origin) {
 }
 
 function fetchOwnPosts() {
-    fetch('http://localhost:2500/getOwnPosts')
+    const user = sessionStorage.getItem('user');
+    fetch('http://localhost:2500/getOwnPosts', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({
+            user
+        })
+    })
         .then(response => response.json())
         .then(data => loadPosts(data['data'], false));
 }
