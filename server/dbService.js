@@ -114,6 +114,7 @@ class DbService {
     }
 
     async addKommentar(themaTitel, kommentarText, nutzername) {
+        await this.increaseNumberOfComments(themaTitel);
         try {
             return await new Promise((resolve, reject) => {
                 const zeitstempel = new Date();
@@ -206,6 +207,41 @@ class DbService {
                     resolve(res);
                 })
             });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async increaseNumberOfComments(themaTitel) {
+        try {
+            await this.setIncreaseNumberOfComments(await new Promise((resolve, reject) => {
+                const query = "SELECT anzahlKommentare FROM themen WHERE Titel = ?;";
+
+                connection.query(query, [themaTitel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            }), themaTitel);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async setIncreaseNumberOfComments(number, themaTitel) {
+        try {
+            let counter;
+            await number.forEach(function ({anzahlKommentare}) {
+                counter = anzahlKommentare;
+            });
+            counter++;
+            return await new Promise((resolve, reject) => {
+                const query = "UPDATE themen SET anzahlKommentare = ? WHERE titel = ?;";
+
+                connection.query(query, [counter, themaTitel], (err, res) => {
+                    if (err) reject(new Error(err.message));
+                    resolve(res);
+                })
+            })
         } catch (error) {
             console.log(error);
         }

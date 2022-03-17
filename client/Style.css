@@ -1,5 +1,5 @@
 body {
-    background-color: white;
+    font-family: Calibri, monospace;
 }
 .Überschrift {
     background-color: #A7BCC7;
@@ -13,7 +13,7 @@ body {
     position: fixed;
     width: 98.4%;
     height: 150px;
-    top: 0px;
+    top: 0;
     background-color: white;
 }
 

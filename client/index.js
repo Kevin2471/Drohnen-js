@@ -151,7 +151,7 @@ function kommentarHinzufuegen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?' + themaTitel);
+                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel+ '&return=' + goto);
             }
         })
 }
@@ -284,14 +284,14 @@ function fetchAllPosts() {
 }
 
 function loadPosts(data, origin) {
-    let table = document.querySelector('.Posts');
+    const table = document.querySelector('.Posts');
 
     if (data.length === 0) {
         table.innerHTML = `<p>Keine Beiträge vorhanden!</p>`;
         return;
     }
     let tableHtml = "";
-    data.forEach(function ({Titel, Benutzername, Zeitstempel}) {
+    data.forEach(function ({Titel, Benutzername, Zeitstempel, AnzahlKommentare}) {
         tableHtml += `<div class='themen'>`
         tableHtml += `<div class='abstandlinksrechts'>`
         tableHtml += `<div class='wrapper'>`
@@ -300,7 +300,7 @@ function loadPosts(data, origin) {
         tableHtml += `</div>`
         tableHtml += `<div class="wrapper">`
         tableHtml += `<h3>Titel:</h3>`
-        tableHtml += `<p class="textrechts">Kommentare: </p>`
+        tableHtml += `<p class="textrechts">Kommentare: ${AnzahlKommentare}</p>`
         tableHtml += `</div>`
         if (origin === false) {
             tableHtml += `<div class="wrapper">`
@@ -318,22 +318,6 @@ function loadPosts(data, origin) {
         tableHtml += `</div>`
     });
     table.innerHTML = tableHtml;
-}
-
-function getNumberOfComments(themaTitel) {
-    return fetch('http://localhost:2500/getNumberComments', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            themaTitel
-        })
-    })
-        .then(res => res.json())
-        .then(result => {
-            return result;
-        })
 }
 
 function fetchOwnPosts() {
