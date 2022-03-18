@@ -15,7 +15,7 @@ function checkLogIn() {
 
 function checkUser(data) {
     if (data === false) {
-        window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html');
+        window.location = 'http://localhost:63342/Drohnen-js/client/Anmelden.html';
     }
 }
 
@@ -55,7 +55,7 @@ function registrierenCheck() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Anmelden.html?registriert');
+                window.location = 'http://localhost:63342/Drohnen-js/client/Anmelden.html?registriert';
             }
         })
 }
@@ -104,7 +104,7 @@ function anmelden() {
                 table.innerHTML = res.error;
             } else {
                 sessionStorage.setItem('user', nutzername);
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Hauptseite.html')
+                window.location = 'http://localhost:63342/Drohnen-js/client/Hauptseite.html';
             }
         });
 }
@@ -175,7 +175,7 @@ function kommentarHinzufuegen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location.replace('http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel + '&return=' + goto);
+                window.location = 'http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel + '&return=' + goto;
             }
         })
 }
