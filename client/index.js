@@ -251,12 +251,13 @@ function loadComments(data) {
     let tableHtml = "";
 
     data.forEach(function ({Kommentar, Benutzername, Zeitstempel}) {
+        const time = formatTime(Zeitstempel);
         numbers++;
         tableHtml += ' <div class="themen">';
         tableHtml += '<div class="abstandlinksrechts">';
         tableHtml += '<div class="wrapper linieunten">';
         tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
-        tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
+        tableHtml += `<p>Datum und Uhrzeit: ${time}</p>`;
         tableHtml += '</div>';
         tableHtml += `<p>${Kommentar}</p>`;
         tableHtml += '</div>';
@@ -286,12 +287,13 @@ function loadPost(data) {
     const table = document.querySelector('.Post');
     let tableHtml = "";
     data.forEach(function ({Titel, Text, Benutzername, Zeitstempel}) {
+        const time = formatTime(Zeitstempel);
         if (Titel === themaTitel) {
             tableHtml += '<div class="themen">';
             tableHtml += '<div class="abstandlinksrechts">';
             tableHtml += '<div class="wrapper linieunten">';
             tableHtml += `<p>Beitrag von: ${Benutzername}</p>`;
-            tableHtml += `<p>Datum und Uhrzeit: ${Zeitstempel}</p>`;
+            tableHtml += `<p>Datum und Uhrzeit: ${time}</p>`;
             tableHtml += '</div>';
             tableHtml += `<p>${Text}</p>`;
             tableHtml += '</div>';
