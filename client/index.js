@@ -15,7 +15,7 @@ function checkLogIn() {
 
 function checkUser(data) {
     if (data === false) {
-        window.location = 'http://localhost:63342/Drohnen-js/client/Anmelden.html';
+        window.location = 'Anmelden.html';
     }
 }
 
@@ -55,7 +55,7 @@ function registrierenCheck() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location = 'http://localhost:63342/Drohnen-js/client/Anmelden.html?registriert';
+                window.location = 'Anmelden.html?registriert';
             }
         })
 }
@@ -104,7 +104,7 @@ function anmelden() {
                 table.innerHTML = res.error;
             } else {
                 sessionStorage.setItem('user', nutzername);
-                window.location = 'http://localhost:63342/Drohnen-js/client/Hauptseite.html';
+                window.location = 'Hauptseite.html';
             }
         });
 }
@@ -175,7 +175,7 @@ function kommentarHinzufuegen() {
             if (res.error) {
                 table.innerHTML = res.error;
             } else {
-                window.location = 'http://localhost:63342/Drohnen-js/client/Thema.html?titel=' + themaTitel + '&return=' + goto;
+                window.location = 'Thema.html?titel=' + themaTitel + '&return=' + goto;
             }
         })
 }
@@ -265,15 +265,14 @@ function loadComments(data) {
     });
     if (numbers === 0) {
         numbers = 0;
-        table.innerHTML = "<p>Keine Kommentare vorhanden.</p>";
-        return;
+        tableHtml = "<p>Keine Kommentare vorhanden.</p>";
     }
     table.innerHTML = tableHtml;
     table = document.querySelector('.return');
     if (goto === "true") {
-        table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/EigeneThemen.html" >zurück</a>'
+        table.innerHTML = '<a href="EigeneThemen.html" >zurück</a>'
     } else {
-        table.innerHTML = '<a href="http://localhost:63342/Drohnen-js/client/Hauptseite.html" >zurück</a>'
+        table.innerHTML = '<a href="Hauptseite.html" >zurück</a>'
     }
 }
 
