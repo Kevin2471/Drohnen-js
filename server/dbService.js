@@ -55,7 +55,7 @@ class DbService {
     async getAllPosts() {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Themen;";
+                const query = "SELECT * FROM Themen ORDER BY ID DESC;";
 
                 connection.query(query, (err, res) => {
                     if (err) reject(new Error(err.message));
@@ -70,7 +70,7 @@ class DbService {
     async getOwnPosts(name) {
         try {
             return await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM Themen WHERE Benutzername = ?;";
+                const query = "SELECT * FROM Themen WHERE Benutzername = ? ORDER BY ID DESC;";
 
                 connection.query(query, [name], (err, res) => {
                     if (err) reject(new Error(err.message));
